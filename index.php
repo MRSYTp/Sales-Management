@@ -15,4 +15,4 @@ if (!$Auth->isLoggedIn()) {
     
 }
 
-var_dump($_SESSION);
+redirectHelper::redirect(urlHelper::siteUrl('add-product.php'));

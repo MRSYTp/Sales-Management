@@ -3,6 +3,7 @@
 require __DIR__ . '/../vendor/autoload.php';
 require __DIR__ . '/../autoload.php';
 
+session_start();
 
 use App\Config\config;
 use App\Models\User;
