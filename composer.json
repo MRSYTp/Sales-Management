@@ -11,5 +11,8 @@
         "psr-4": {
             "Tests\\": "tests/"
         }
+    },
+    "require": {
+        "firebase/php-jwt": "^6.11"
     }
 }
