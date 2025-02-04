@@ -5,7 +5,11 @@ namespace App\Validators;
 class loginValidator extends baseValidator{
 
     public function validate (array $params) : bool
-    {
+    {   
+        if (!isset($params['email']) || !isset($params['password'])) {
+            $this->addError('اطلاعات ارسال شده صحیح نیست');
+            return !$this->hasError();
+        }
         $this->checkEmail($params['email']);
         $this->checkPassword($params['password']);
         return !$this->hasError();

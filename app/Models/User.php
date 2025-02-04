@@ -42,4 +42,14 @@ class User
         ]);
         return $this->db->lastInsertId() ?? null;
     }
+
+    public function rollBack() : void 
+    {
+        $this->db->rollBack();
+    }
+
+    public function beginTransaction() : void 
+    {
+        $this->db->beginTransaction();
+    }
 }

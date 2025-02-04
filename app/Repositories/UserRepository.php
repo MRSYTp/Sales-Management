@@ -28,4 +28,14 @@ class UserRepository implements UserInterface
     {
         return $this->userModel->create($data);
     }
+
+    public function rollBack() : void 
+    {
+        $this->userModel->rollBack();
+    }
+
+    public function beginTransaction() : void 
+    {
+        $this->userModel->beginTransaction();
+    }
 }

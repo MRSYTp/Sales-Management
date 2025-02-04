@@ -13,7 +13,7 @@ use App\Services\JWTService;
 
 
 $app_config = config::get('app');
-$db_config = config::get('database');
+$db_config = config::get('database.SM_DB');
 $JWTConfig = config::get('JWT');
 $cookieConfig = config::get('cookie');
 $sessionConfig = config::get('session');

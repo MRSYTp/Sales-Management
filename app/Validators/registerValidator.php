@@ -7,7 +7,16 @@ use App\Validators\baseValidator;
 class registerValidator extends baseValidator {
 
     public function validate(array $data) : bool
-    {
+    {   
+        $whitelist = ['username', 'email', 'password', 'passwordConfirm'];
+
+
+        if (array_diff(array_keys($data), $whitelist) || array_diff($whitelist, array_keys($data))) {
+            $this->addError('اطلاعات ارسال شده صحیح نیست');
+            return !$this->hasError();
+        }
+
+
         $this->validateName($data['username']);
 
         $this->validateEmail($data['email']);
