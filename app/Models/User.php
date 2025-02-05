@@ -18,7 +18,7 @@ class User
     {
         $stmt = $this->db->prepare("SELECT * FROM {$this->table} WHERE id = :id");
         $stmt->execute(['id' => $id]);
-        $result = $stmt->fetch(PDO::FETCH_OBJ);
+        $result = $stmt->fetch();
     
         return $result !== false ? $result : null;
     }
@@ -27,7 +27,8 @@ class User
     {
         $stmt = $this->db->prepare("SELECT * FROM {$this->table} WHERE email = :email");
         $stmt->execute(['email' => $email]);
-        $result = $stmt->fetch(PDO::FETCH_OBJ);
+        $result = $stmt->fetch();
+            ;
     
         return $result !== false ? $result : null;
     }
