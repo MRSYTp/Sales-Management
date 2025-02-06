@@ -20,8 +20,18 @@ class Product
     {
         $stmt = $this->db->prepare("SELECT * FROM {$this->table} WHERE id = :id");
         $stmt->execute(['id' => $id]);
-        $result = $stmt->fetch();
+        $result = $stmt->fetch(PDO::FETCH_OBJ);
         return $result !== false ? $result : null;
+    }
+
+    public function rollBack() : void 
+    {
+        $this->db->rollBack();
+    }
+
+    public function beginTransaction() : void 
+    {
+        $this->db->beginTransaction();
     }
     
 }
