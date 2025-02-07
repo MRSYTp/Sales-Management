@@ -6,7 +6,7 @@ use App\Helpers\urlHelper;
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title> افزودن محصول | کنترل پنل</title>
+  <title>  محصولات | کنترل پنل</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -19,8 +19,7 @@ use App\Helpers\urlHelper;
   <link rel="stylesheet" href="<?= $app_config['base_url'] ?>assets/bower_components/Ionicons/css/ionicons.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="<?= $app_config['base_url'] ?>assets/css/AdminLTE.css">
-  <!-- AdminLTE Skins. Choose a skin from the css/skins
-       folder instead of downloading all of them to reduce the load. -->
+ 
   <link rel="stylesheet" href="<?= $app_config['base_url'] ?>assets/css/skins/_all-skins.min.css">
 
 
@@ -125,77 +124,188 @@ use App\Helpers\urlHelper;
   </aside>
 
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
+  <div class="content-wrapper" style="min-height: 915.875px;">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        افزودن محصول جدید
+         محصولات
+
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> خانه</a></li>
-        <li class="active">محصول ها</li>
-        <li class="active">افزودن محصول</li>
+        <li><a href="<?= $app_config['base_url'] ?>"><i class="fa fa-dashboard"></i> خانه</a></li>
+        <li class="active">محصولات</li>
+        <li class="active">محصولات</li>
       </ol>
     </section>
 
     <!-- Main content -->
     <section class="content">
-      <div class="row">
-        <!-- left column -->
-        <div class="col-md-6">
-          <!-- general form elements -->
-          <div class="box box-primary">
-            <div class="box-header with-border">
+
+        <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-header">
+              <div class="dataTables_length" id="example1_length">
+                  <label style="display: inline-block;">نمایش</label>
+                  <select name="example1_length" aria-controls="example1" class="form-control input-sm" style="display: inline-block; width: auto;">
+                      <option value="">انتخاب گزینه</option>
+                      <option value="1">گرانترین</option>
+                      <option value="2">ارزانترین</option>
+                  </select>
+                  <label style="display: inline-block;">محصولات</label>
+              </div>
+
+
+                <div class="box-tools">
+                    <div class="input-group input-group-sm" style="width: 150px;">
+                        <input type="text" name="table_search" class="form-control" placeholder="جستجو">
+                        <div class="input-group-btn">
+                            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
             </div>
+
             <!-- /.box-header -->
-            <!-- form start -->
-            <form role="form" action="<?= urlHelper::siteUrl('add-product.php') ?>" method="post">
-              <div class="box-body">
-                <div class="form-group">
-                  <label for="exampleInputEmail1">نام محصول:</label>
-                  <input name="name" type="text" class="form-control" id="exampleInputEmail1" placeholder="نام محصول">
-                </div>
-
-                <div class="form-group">
-                  <label for="exampleInputEmail1">قیمت خرید:</label>
-                  <input name="cost_price" type="text" class="form-control" id="exampleInputEmail1" placeholder="قیمت خرید">
-                </div>
-
-                <div class="form-group">
-                  <label for="exampleInputEmail1">قیمت فروش:</label>
-                  <input name="sell_price" type="text" class="form-control" id="exampleInputEmail1" placeholder="قیمت فروش">
-                </div>
-              </div>
-              <!-- /.box-body -->
-
-              <div class="box-footer">
-                <button type="submit" class="btn btn-primary">ارسال</button>
-                <button type="reset" class="btn btn-danger">انصراف</button>
-              </div>
-            </form>
+            <div class="box-body table-responsive no-padding">
+              <table class="table table-hover">
+                <tbody><tr>
+                <?php if(is_null($products)) :  ?>
+                    <th>محصولی یافت نشد</th>
+                <?php endif; ?>
+                <?php if (!is_null($products)) : ?>
+                  <th>نام</th>
+                  <th>قیمت خرید</th>
+                  <th>قیمت فروش</th>
+                  <th>عملیات</th>
+                </tr>
+                <?php foreach($products as $product) : ?>
+                <tr>
+                  
+                  <td><?= $product->name ?></td>
+                  <td><?= $product->cost_price ?></td>
+                  <td><?= $product->sell_price ?></td>
+                  <td><button type="button" class="label label-primary" data-toggle="modal" data-target="#modal-info">ویرایش</button></td>
+                </tr>
+                <?php endforeach; ?>
+                <?php endif; ?>
+                
+              </tbody></table>
+              
+            </div>
+            <!-- /.box-body -->
           </div>
           <!-- /.box -->
         </div>
-        <!--/.col (left) -->
       </div>
-      <!-- /.row -->
+      <div class="modal modal-info fade" id="modal-info" style="display: none;">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">×</span></button>
+                <h4 class="modal-title">ویرایشگر</h4>
+              </div>
+              <div class="modal-body">
+                <p>محتوا</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">خروج</button>
+                <button type="button" class="btn btn-outline">ذخیره</button>
+              </div>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
     </section>
-    <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
   <footer class="main-footer text-left">
     <strong>Copyleft &copy; 2014-2017 <a href="https://adminlte.io">Almsaeed Studio</a> & <a href="https://netparadis.com">NetParadis</a></strong>
   </footer>
-
-
-  <!-- Add the sidebar's background. This div must be placed
-       immediately after the control sidebar -->
   <div class="control-sidebar-bg"></div>
 </div>
-<!-- ./wrapper -->
 
-<!-- jQuery 3 -->
 <script src="<?= $app_config['base_url'] ?>assets/bower_components/jquery/dist/jquery.min.js"></script>
+<script>
+
+$(document).ready(function () {
+
+    function updateTable(response) {
+        let tableBody = $('table tbody');
+        tableBody.empty();
+
+        if (response === null || response.length === 0) {
+            tableBody.append('<tr><td colspan="4">محصولی یافت نشد</td></tr>');
+        } else {
+            tableBody.append(`
+                    <tr>
+                      <th>نام</th>
+                      <th>قیمت خرید</th>
+                      <th>قیمت فروش</th>
+                      <th>عملیات</th>
+                    </tr>
+            
+            `);
+            response.forEach(function (product) {
+                tableBody.append(`
+                    <tr>
+                        <td>${product.name}</td>
+                        <td>${product.cost_price}</td>
+                        <td>${product.sell_price}</td>
+                        <td><button type="button" class="label label-primary" data-toggle="modal" data-target="#modal-info">ویرایش</button></td>
+                    </tr>
+                `);
+            });
+        }
+    }
+
+    // ارسال مقدار انتخاب‌شده به سرور
+    $('select[name="example1_length"]').on('change', function () {
+        let sortValue = $(this).val();
+
+        if (sortValue === '') {
+            return;
+        }
+
+        $.ajax({
+            url: 'process/sort-product-handler.php',
+            type: 'POST',
+            data: { sort: sortValue,
+                user_id: <?= $currentUserData->id ?> },
+            dataType: 'json',
+            success: function (response) {
+                updateTable(response);
+            },
+            error: function () {
+                alert('خطا در دریافت اطلاعات');
+            }
+        });
+    });
+
+    $('input[name="table_search"]').on('keyup', function () {
+        let searchText = $(this).val().trim();
+
+        $.ajax({
+            url: 'process/product-search-handler.php',
+            type: 'POST',
+            data: { name: searchText,
+                user_id: <?= $currentUserData->id ?> },
+            dataType: 'json',
+            success: function (response) {
+                updateTable(response);
+            },
+            error: function () {
+                alert('خطا در دریافت اطلاعات');
+            }
+        });
+    });
+});
+
+
+
+</script>
 <!-- Bootstrap 3.3.7 -->
 <script src="<?= $app_config['base_url'] ?>assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- FastClick -->

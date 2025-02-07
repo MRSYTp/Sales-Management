@@ -7,6 +7,16 @@ use App\Helpers\urlHelper;
 use App\Helpers\messageHelper;
 use App\Validators\addProductValidator;
 
+if (!$Auth->isLoggedIn()) {
+
+    redirectHelper::redirect(urlHelper::siteUrl('auth.php?action=login'));
+
+}else {
+
+    $_SESSION[$sessionConfig['user_id_session']] = $Auth->getUserLoggedIn();
+    
+}
+
 
 $action = $_GET['action'] ?? null;
 if ($action == 'logout') {
@@ -39,7 +49,7 @@ function handleAddProduct ($params)
         return;
     }
 
-    if (!is_null($ProductRepo->findByName($params['name']))) {
+    if (!is_null($ProductRepo->findByName($params['name'] , $currentUserData->id))) {
         messageHelper::showErrorMessageWithTimeout('محصولی با این نام قبلا ثبت شده است.',3000);
         return;
     }

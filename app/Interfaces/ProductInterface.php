@@ -6,7 +6,7 @@ interface ProductInterface
 {
 
     public function findById(int $id): ?object;
-    public function findAll(): ?array;
+    public function findAll(int $user_id): ?array;
     public function create(array $data): ?int;
     public function update(int $id, array $data) : bool;
     public function delete(int $id): bool;

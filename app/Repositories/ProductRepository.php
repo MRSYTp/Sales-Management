@@ -20,19 +20,19 @@ class ProductRepository implements ProductInterface
         return $this->productModel->findById($id);
     }
 
-    public function findByName(string $name) : ?object
+    public function findByName(string $name , int $user_id) : ?object
     {
-        $sql = "SELECT * FROM {$this->productModel->table} WHERE name = :name";
+        $sql = "SELECT * FROM {$this->productModel->table} WHERE user_id = :id AND name = :name";
         $stmt = $this->productModel->db->prepare($sql);
-        $stmt->execute(['name' => $name]);
+        $stmt->execute(['name' => $name , 'id' => $user_id]);
         $result = $stmt->fetch(PDO::FETCH_OBJ);
         return $result !== false ? $result : null;
         
     }
 
-    public function findAll() : ?array
+    public function findAll(int $user_id) : ?array
     {
-        $stmt = $this->productModel->db->query("SELECT * FROM {$this->productModel->table}");
+        $stmt = $this->productModel->db->query("SELECT * FROM {$this->productModel->table} WHERE user_id = $user_id");
         $results = $stmt->fetchAll(PDO::FETCH_OBJ);
         return empty($results) ? null : $results;
     }
@@ -85,13 +85,33 @@ class ProductRepository implements ProductInterface
 
     public function search(array $criteria): ?array
     {
-        $sql = "SELECT * FROM {$this->productModel->table} WHERE name LIKE :name";
+        $sql = "SELECT * FROM {$this->productModel->table} WHERE user_id = :user_id AND name LIKE :name";
         $stmt = $this->productModel->db->prepare($sql);
+        
         $name = $criteria['name'] ?? '';
-        $stmt->execute(['name' => '%' . $name . '%']);
+        
+        $stmt->execute([
+            'name' => '%' . $name . '%', 
+            'user_id' => $criteria['user_id']
+        ]);
+        
         $result = $stmt->fetchAll(PDO::FETCH_OBJ);
         return empty($result) ? null : $result;
     }
+
+    public function sortByPrice(int $user_id , string $sort): ?array
+    {
+
+        $sql = "SELECT * FROM {$this->productModel->table} WHERE user_id = :user_id ORDER BY sell_price $sort";
+        $stmt = $this->productModel->db->prepare($sql);
+        $stmt->execute([
+            'user_id' => $user_id
+        ]);
+        
+        $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+        return empty($result) ? null : $result;
+    }
+    
 
 
     public function rollBack() : void 

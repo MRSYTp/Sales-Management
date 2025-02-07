@@ -56,7 +56,7 @@ class ProductTest extends TestCase
     {
         $this->InsertDataInDB();
 
-        $result = $this->productRepository->findByName('Test Product');
+        $result = $this->productRepository->findByName('Test Product' , 1);
 
         $this->assertNotNull($result);
         $this->assertIsObject($result);
@@ -65,7 +65,7 @@ class ProductTest extends TestCase
 
     public function test_method_findByName_can_return_null_if_product_not_found()
     {
-        $result = $this->productRepository->findByName('Test Product1112222221');
+        $result = $this->productRepository->findByName('Test Product1112222221' , 1);
 
         $this->assertNull($result);
     }
@@ -75,7 +75,7 @@ class ProductTest extends TestCase
         $this->InsertDataInDB();
         $this->InsertDataInDB(['name' => 'Test Product 2']);
 
-        $result = $this->productRepository->findAll();
+        $result = $this->productRepository->findAll(1);
 
         $this->assertNotNull($result);
         $this->assertIsArray($result);
@@ -84,7 +84,7 @@ class ProductTest extends TestCase
 
     public function test_method_findAll_can_return_null_if_no_product_found()
     {
-        $result = $this->productRepository->findAll();
+        $result = $this->productRepository->findAll(1);
 
         $this->assertNull($result);
     }
@@ -98,9 +98,9 @@ class ProductTest extends TestCase
         $this->InsertDataInDB(['name' => 'Test 23']);
         $this->InsertDataInDB(['name' => 'Test Product 43']);
 
-        $result1 = $this->productRepository->search(['name' => 'Test']);
-        $result2 = $this->productRepository->search(['name' => 'Test Product']);
-        $result3 = $this->productRepository->search(['name' => 'Test Product 43']);
+        $result1 = $this->productRepository->search(['name' => 'Test' , 'user_id' => 1]);
+        $result2 = $this->productRepository->search(['name' => 'Test Product', 'user_id' => 1]);
+        $result3 = $this->productRepository->search(['name' => 'Test Product 43', 'user_id' => 1]);
 
         $this->assertNotNull($result1);
         $this->assertNotNull($result2);
@@ -118,7 +118,7 @@ class ProductTest extends TestCase
 
     public function test_method_search_can_return_null_if_no_product_found()
     {
-        $result = $this->productRepository->search(['name' => 'Test Product 43']);
+        $result = $this->productRepository->search(['name' => 'Test Product 43', 'user_id' => 1]);
 
         $this->assertNull($result);
     }
