@@ -185,7 +185,7 @@ use App\Helpers\urlHelper;
                   <td><?= $product->name ?></td>
                   <td><?= $product->cost_price ?></td>
                   <td><?= $product->sell_price ?></td>
-                  <td><button type="button" class="label label-primary" data-toggle="modal" data-target="#modal-info">ویرایش</button></td>
+                  <td><button type="button" class="label label-primary" data-toggle="modal" data-target="#modal-default" data-Pid="<?= $product->id; ?>">ویرایش</button></td>
                 </tr>
                 <?php endforeach; ?>
                 <?php endif; ?>
@@ -198,26 +198,42 @@ use App\Helpers\urlHelper;
           <!-- /.box -->
         </div>
       </div>
-      <div class="modal modal-info fade" id="modal-info" style="display: none;">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">×</span></button>
-                <h4 class="modal-title">ویرایشگر</h4>
-              </div>
-              <div class="modal-body">
-                <p>محتوا</p>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">خروج</button>
-                <button type="button" class="btn btn-outline">ذخیره</button>
-              </div>
-            </div>
-            <!-- /.modal-content -->
-          </div>
-          <!-- /.modal-dialog -->
+      <div class="modal fade" id="modal-default" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span></button>
+        <h4 class="modal-title">ویرایشگر</h4>
+      </div>
+      <div class="modal-body">
+
+        <div id="success-message" class="alert alert-success" style="display: none;">محصول با موفقیت بروزرسانی شد</div>
+
+        <input type="hidden" name="product_id" id="product_id">
+        
+        <div class="form-group">
+          <label for="name">نام محصول:</label>
+          <input name="name" type="text" class="form-control" id="name" placeholder="نام محصول">
         </div>
+        <div class="form-group">
+          <label for="cost_price">قیمت خرید:</label>
+          <input name="cost_price" type="text" class="form-control" id="cost_price" placeholder="قیمت خرید">
+        </div>
+        <div class="form-group">
+          <label for="sell_price">قیمت فروش:</label>
+          <input name="sell_price" type="text" class="form-control" id="sell_price" placeholder="قیمت فروش">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="save-product">ذخیره</button> 
+        <button type="button" class="btn btn-danger" id="delete-product">حذف</button>
+        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">خروج</button>
+      </div>
+    </div>
+  </div>
+</div>
+
     </section>
   </div>
   <!-- /.content-wrapper -->
@@ -254,14 +270,106 @@ $(document).ready(function () {
                         <td>${product.name}</td>
                         <td>${product.cost_price}</td>
                         <td>${product.sell_price}</td>
-                        <td><button type="button" class="label label-primary" data-toggle="modal" data-target="#modal-info">ویرایش</button></td>
+                        <td><button type="button" class="label label-primary" data-toggle="modal" data-target="#modal-default" data-Pid="${product.id}">ویرایش</button></td>
                     </tr>
                 `);
             });
         }
     }
 
-    // ارسال مقدار انتخاب‌شده به سرور
+    $(document).on('click', '#delete-product', function () {
+      let productId = $('#product_id').val();
+
+
+      if (!confirm('آیا مطمئن هستید که می‌خواهید این محصول را حذف کنید؟')) {
+          return;
+      }
+
+      $.ajax({
+          url: '<?= $app_config['base_url'] ?>process/delete-product-handler.php',
+          type: 'POST',
+          data: { id: productId },
+          dataType: 'json',
+          success: function (response) {
+              if (response === true) {
+
+                  $('.modal-body').prepend('<div class="alert alert-success">محصول با موفقیت حذف شد.</div>');
+
+                  setTimeout(function () {
+                      location.reload();
+                  }, 2000);
+              } else {
+
+                  $('.modal-body').prepend('<div class="alert alert-danger">خطا در حذف محصول!</div>');
+              }
+          },
+          error: function () {
+              alert('خطا در ارتباط با سرور!');
+          }
+      });
+    });
+
+
+    $(document).on('click', '#save-product', function () {
+      let productId = $('#product_id').val();
+      let name = $('#name').val();
+      let costPrice = $('#cost_price').val();
+      let sellPrice = $('#sell_price').val();
+
+      $.ajax({
+          url: '<?= $app_config['base_url'] ?>process/update-product-handler.php',
+          type: 'POST',
+          data: {
+              id: productId,
+              name: name,
+              cost_price: costPrice,
+              sell_price: sellPrice
+          },
+          dataType: 'json',
+          success: function (response) {
+              if (response === true) {
+                  $('#success-message').fadeIn(); 
+                  setTimeout(function () {
+                      location.reload(); 
+                  }, 2000);
+              } else {
+                  alert('خطا در بروزرسانی محصول!');
+              }
+          },
+          error: function () {
+              alert('خطا در ارتباط با سرور!');
+          }
+      });
+    });
+
+    $(document).on('click', '.label-primary', function () {
+      let productId = $(this).data('pid');
+      
+      $('#product_id').val(productId);
+      $('input[name="name"]').val('');
+      $('input[name="cost_price"]').val('');
+      $('input[name="sell_price"]').val('');
+
+      $.ajax({
+          url: '<?= $app_config['base_url'] ?>process/show-product-in-modal-handler.php',
+          type: 'POST',
+          data: { id: productId },
+          dataType: 'json',
+          success: function (response) {
+              if (response) {
+                  $('input[name="name"]').val(response.name);
+                  $('input[name="cost_price"]').val(response.cost_price);
+                  $('input[name="sell_price"]').val(response.sell_price);
+              } else {
+                  alert('خطا در دریافت اطلاعات محصول!');
+              }
+          },
+          error: function () {
+              alert('خطا در ارتباط با سرور!');
+          }
+      });
+    });
+
     $('select[name="example1_length"]').on('change', function () {
         let sortValue = $(this).val();
 
@@ -270,7 +378,7 @@ $(document).ready(function () {
         }
 
         $.ajax({
-            url: 'process/sort-product-handler.php',
+            url: '<?= $app_config['base_url'] ?>process/sort-product-handler.php',
             type: 'POST',
             data: { sort: sortValue,
                 user_id: <?= $currentUserData->id ?> },
@@ -288,7 +396,7 @@ $(document).ready(function () {
         let searchText = $(this).val().trim();
 
         $.ajax({
-            url: 'process/product-search-handler.php',
+            url: '<?= $app_config['base_url'] ?>process/product-search-handler.php',
             type: 'POST',
             data: { name: searchText,
                 user_id: <?= $currentUserData->id ?> },
@@ -302,8 +410,6 @@ $(document).ready(function () {
         });
     });
 });
-
-
 
 </script>
 <!-- Bootstrap 3.3.7 -->
