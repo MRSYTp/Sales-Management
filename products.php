@@ -15,6 +15,13 @@ if (!$Auth->isLoggedIn()) {
     
 }
 
+$action = $_GET['action'] ?? null;
+if ($action == 'logout') {
+    session_destroy();
+    $Auth->logout();
+    redirectHelper::redirect(urlHelper::siteUrl('auth.php?action=login'));
+}
+
 $currentUserData = $UserRepo->findById($_SESSION[$sessionConfig['user_id_session']]);
 $products = $ProductRepo->findAll($currentUserData->id);
 

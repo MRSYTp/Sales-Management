@@ -6,10 +6,18 @@ require __DIR__ . '/../autoload.php';
 session_start();
 
 use App\Config\config;
-use App\Models\User;
+
 use App\Repositories\UserRepository;
-use App\Models\Product;
+use App\Repositories\SaleItemRepository;
+use App\Repositories\SaleRepository;
 use App\Repositories\ProductRepository;
+
+
+use App\Models\Product;
+use App\Models\Sale;
+use App\Models\SaleItem;
+use App\Models\User;
+
 use App\Services\authService;
 use App\Services\JWTService;
 
@@ -25,6 +33,8 @@ $PDO_connection->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
 
 $UserRepo = new UserRepository(new User($PDO_connection));
 $ProductRepo = new ProductRepository(new Product($PDO_connection));
+$SaleRepo = new SaleRepository(new Sale($PDO_connection));
+$SaleItemRepo = new SaleItemRepository(new SaleItem($PDO_connection));
 
 
 $JWTService = new JWTService(
@@ -33,4 +43,5 @@ $JWTService = new JWTService(
     $JWTConfig['expiry']
 );
 $Auth = new authService($JWTService , $cookieConfig);
+
 

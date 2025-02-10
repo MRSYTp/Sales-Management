@@ -6,6 +6,14 @@ class addProductValidator extends baseValidator
 
     public function validate(array $data) : bool
     {
+
+        $whitelist = ['name', 'cost_price', 'sell_price'];
+
+
+        if (array_diff(array_keys($data), $whitelist) || array_diff($whitelist, array_keys($data))) {
+            $this->addError('اطلاعات ارسال شده صحیح نیست');
+            return !$this->hasError();
+        }
         $this->validateName($data['name'] ?? null);
         $this->validateCostPrice($data['cost_price'] ?? null);
         $this->validateSellPrice($data['sell_price'] ?? null);

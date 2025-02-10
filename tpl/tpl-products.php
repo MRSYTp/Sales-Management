@@ -309,7 +309,6 @@ $(document).ready(function () {
       });
     });
 
-
     $(document).on('click', '#save-product', function () {
       let productId = $('#product_id').val();
       let name = $('#name').val();
