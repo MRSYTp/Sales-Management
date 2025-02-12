@@ -6,7 +6,7 @@ use App\Helpers\urlHelper;
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>  محصولات | کنترل پنل</title>
+  <title>  فروش ها | کنترل پنل</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -160,7 +160,7 @@ use App\Helpers\urlHelper;
                     <div id="example1_filter" class="dataTables_filter">
                         <label>
                             جستجو:
-                            <input type="search" class="form-control input-sm" placeholder="" aria-controls="example1">
+                            <input type="search" class="form-control input-sm" name="table_search" placeholder="" aria-controls="example1">
                         </label>
                     </div>
                 </div>
@@ -195,6 +195,11 @@ use App\Helpers\urlHelper;
           <!-- /.box -->
         </div>
         <div class="col-md-9">
+        <?php if(is_null($Sales)) :  ?>
+          <div class="alert alert-warning">هیچ فروشی یافت نشد.</div>
+        <?php endif; ?>
+        <?php if(!is_null($Sales)) : ?>
+        <?php foreach($Sales as $sale) : ?>
           <div class="box box-primary">
             <div class="box-header">
             </div>
@@ -202,261 +207,66 @@ use App\Helpers\urlHelper;
                 <div class="row">
 
                     <div class="col-xs-12">
-                        <p class="lead">مهلت پرداخت: ۱۳ مرداد ۱۳۹۶</p>
+                        <p class="lead"><?= $sale->customer_name ?></p>
 
                         <div class="table-responsive">
                             <table class="table">
                             <tbody><tr>
-                                <th style="width:50%">مبلغ کل:</th>
-                                <td>250.300 تومان</td>
+                                <th style="width:50%">شماره مشتری:</th>
+                                <td> <?= is_null($sale->customer_phone) ? 'ندارد' : $sale->customer_phone ?> </td>
                             </tr>
                             <tr>
-                                <th>مالیات (9.3%)</th>
-                                <td>10.340 تومان</td>
+                                <th>مبلع کل خرید:</th>
+                                <td><?= number_format($sale->total_price);?> تومان</td>
                             </tr>
                             <tr>
-                                <th>تخفیف</th>
-                                <td>5.800 تومان</td>
+                                <th>سود شما از خرید:</th>
+                                <td>----- تومان</td>
                             </tr>
                             <tr>
-                                <th>مبلغ قابل پرداخت:</th>
-                                <td>255.240 تومان</td>
+                                <th>زمان خرید:</th>
+                                <td><?= verta($sale->sale_date)->format('%d  %B  %Y'); ?></td>
                             </tr>
                             </tbody>
                         </table> 
                         </div>
-                        <button type="button" class="btn btn-block btn-primary" style="margin: 0px; width: 15%;">جزییات</button>
+                        
                     </div>
                     
                     <!-- /.col -->
                 </div>
                 
 
-                <!-- <div class="row">
+                <div class="row" style="display: none;">
                     <div class="col-xs-12 table-responsive">
                         <table class="table table-striped">
                             <thead>
                             <tr>
                             <th>تعداد</th>
-                            <th>محصول</th>
-                            <th>سریال</th>
-                            <th>توضیحات</th>
+                            <th>نام</th>
+                            <th>قیمت محصول</th>
                             <th>قیمت کل</th>
                             </tr>
                             </thead>
                             <tbody>
+                            <?php $saleitems = $SaleItemRepo->findAll($sale->id); ?>
+                            <?php foreach($saleitems as $saleitem) : ?>
                             <tr>
-                            <td>1</td>
-                            <td>Call of Duty</td>
-                            <td>455-981-221</td>
-                            <td>بازی جنگی</td>
-                            <td> 64.500 تومان</td>
+                            <td><?= $saleitem->quantity?></td>
+                            <td><?= $saleitem->product_name ?></td>
+                            <td><?= number_format($saleitem->sell_price);?> تومان</td>
+                            <td><?= number_format($saleitem->total_price);?> تومان</td>
                             </tr>
-                            <tr>
-                            <td>1</td>
-                            <td>Need for Speed IV</td>
-                            <td>247-925-726</td>
-                            <td>بازی ماشینی</td>
-                            <td>50.000 تومان</td>
-                            </tr>
-                            <tr>
-                            <td>1</td>
-                            <td>Monsters DVD</td>
-                            <td>735-845-642</td>
-                            <td>بازی خیابانی</td>
-                            <td>10.700 تومان</td>
-                            </tr>
-                            <tr>
-                            <td>1</td>
-                            <td>Grown Ups Blue Ray</td>
-                            <td>422-568-642</td>
-                            <td>بازی فکری</td>
-                            <td>25.990 تومان</td>
-                            </tr>
+                            <?php  endforeach; ?>
                             </tbody>
                         </table>
                     </div>
-            </div> -->
-
             </div>
-            
-            <!-- /.box-body -->
+            <button type="button" class="btn btn-block btn-primary details-button" style="margin: 0px; width: 15%;">جزییات</button>
+            </div>
           </div>
-          <div class="box box-primary">
-            <div class="box-header">
-            </div>
-            <div class="box-body">
-                <div class="row">
-
-                    <div class="col-xs-12">
-                        <p class="lead">مهلت پرداخت: ۱۳ مرداد ۱۳۹۶</p>
-
-                        <div class="table-responsive">
-                            <table class="table">
-                            <tbody><tr>
-                                <th style="width:50%">مبلغ کل:</th>
-                                <td>250.300 تومان</td>
-                            </tr>
-                            <tr>
-                                <th>مالیات (9.3%)</th>
-                                <td>10.340 تومان</td>
-                            </tr>
-                            <tr>
-                                <th>تخفیف</th>
-                                <td>5.800 تومان</td>
-                            </tr>
-                            <tr>
-                                <th>مبلغ قابل پرداخت:</th>
-                                <td>255.240 تومان</td>
-                            </tr>
-                            </tbody>
-                        </table> 
-                        </div>
-                        <button type="button" class="btn btn-block btn-primary" style="margin: 0px; width: 15%;">جزییات</button>
-                    </div>
-                    
-                    <!-- /.col -->
-                </div>
-                
-
-                <!-- <div class="row">
-                    <div class="col-xs-12 table-responsive">
-                        <table class="table table-striped">
-                            <thead>
-                            <tr>
-                            <th>تعداد</th>
-                            <th>محصول</th>
-                            <th>سریال</th>
-                            <th>توضیحات</th>
-                            <th>قیمت کل</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                            <td>1</td>
-                            <td>Call of Duty</td>
-                            <td>455-981-221</td>
-                            <td>بازی جنگی</td>
-                            <td> 64.500 تومان</td>
-                            </tr>
-                            <tr>
-                            <td>1</td>
-                            <td>Need for Speed IV</td>
-                            <td>247-925-726</td>
-                            <td>بازی ماشینی</td>
-                            <td>50.000 تومان</td>
-                            </tr>
-                            <tr>
-                            <td>1</td>
-                            <td>Monsters DVD</td>
-                            <td>735-845-642</td>
-                            <td>بازی خیابانی</td>
-                            <td>10.700 تومان</td>
-                            </tr>
-                            <tr>
-                            <td>1</td>
-                            <td>Grown Ups Blue Ray</td>
-                            <td>422-568-642</td>
-                            <td>بازی فکری</td>
-                            <td>25.990 تومان</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-            </div> -->
-
-            </div>
-            
-            <!-- /.box-body -->
-          </div>
-          <div class="box box-primary">
-            <div class="box-header">
-            </div>
-            <div class="box-body">
-                <div class="row">
-
-                    <div class="col-xs-12">
-                        <p class="lead">مهلت پرداخت: ۱۳ مرداد ۱۳۹۶</p>
-
-                        <div class="table-responsive">
-                            <table class="table">
-                            <tbody><tr>
-                                <th style="width:50%">مبلغ کل:</th>
-                                <td>250.300 تومان</td>
-                            </tr>
-                            <tr>
-                                <th>مالیات (9.3%)</th>
-                                <td>10.340 تومان</td>
-                            </tr>
-                            <tr>
-                                <th>تخفیف</th>
-                                <td>5.800 تومان</td>
-                            </tr>
-                            <tr>
-                                <th>مبلغ قابل پرداخت:</th>
-                                <td>255.240 تومان</td>
-                            </tr>
-                            </tbody>
-                        </table> 
-                        </div>
-                        <button type="button" class="btn btn-block btn-primary" style="margin: 0px; width: 15%;">جزییات</button>
-                    </div>
-                    
-                    <!-- /.col -->
-                </div>
-                
-
-                <!-- <div class="row">
-                    <div class="col-xs-12 table-responsive">
-                        <table class="table table-striped">
-                            <thead>
-                            <tr>
-                            <th>تعداد</th>
-                            <th>محصول</th>
-                            <th>سریال</th>
-                            <th>توضیحات</th>
-                            <th>قیمت کل</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                            <td>1</td>
-                            <td>Call of Duty</td>
-                            <td>455-981-221</td>
-                            <td>بازی جنگی</td>
-                            <td> 64.500 تومان</td>
-                            </tr>
-                            <tr>
-                            <td>1</td>
-                            <td>Need for Speed IV</td>
-                            <td>247-925-726</td>
-                            <td>بازی ماشینی</td>
-                            <td>50.000 تومان</td>
-                            </tr>
-                            <tr>
-                            <td>1</td>
-                            <td>Monsters DVD</td>
-                            <td>735-845-642</td>
-                            <td>بازی خیابانی</td>
-                            <td>10.700 تومان</td>
-                            </tr>
-                            <tr>
-                            <td>1</td>
-                            <td>Grown Ups Blue Ray</td>
-                            <td>422-568-642</td>
-                            <td>بازی فکری</td>
-                            <td>25.990 تومان</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-            </div> -->
-
-            </div>
-            
-            <!-- /.box-body -->
-          </div>
-
+          <?php endforeach; ?>
+          <?php endif; ?>
         </div>
         
     </div>
@@ -472,6 +282,110 @@ use App\Helpers\urlHelper;
 </div>
 
 <script src="<?= $app_config['base_url'] ?>assets/bower_components/jquery/dist/jquery.min.js"></script>
+<script>
+
+  $(document).ready(function() {
+
+      function updateSalesTable(response) {
+        let tableBody = $('div.col-md-9');
+        tableBody.empty(); 
+
+        
+        if (response.sale === null) {
+            tableBody.append('<div class="alert alert-warning">هیچ فروشی یافت نشد.</div>');
+        } else {
+            
+            response.sale.forEach(function (sale) {
+                let saleDetails = `
+                    <div class="box box-primary" id="sale-${sale.id}">
+                        <div class="box-header"></div>
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <p class="lead">${sale.customer_name}</p>
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <tbody>
+                                                <tr><th style="width:50%">شماره مشتری:</th><td>${sale.customer_phone || 'ندارد'}</td></tr>
+                                                <tr><th>مبلغ کل خرید:</th><td>${new Intl.NumberFormat().format(sale.total_price)} تومان</td></tr>
+                                                <tr><th>زمان خرید:</th><td>${sale.sale_date}</td></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            
+
+                            <div class="row" style="display: none;">
+                                <div class="col-xs-12 table-responsive">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr><th>تعداد</th><th>نام محصول</th><th>قیمت محصول</th><th>قیمت کل</th></tr>
+                                        </thead>
+                                        <tbody>
+                                        `;
+                if (response.saleItem[sale.id]) {
+                    response.saleItem[sale.id].forEach(function (item) {
+                        saleDetails += `
+                            <tr>
+                                <td>${item.quantity}</td>
+                                <td>${item.product_name}</td>
+                                <td>${new Intl.NumberFormat().format(item.sell_price)} تومان</td>
+                                <td>${new Intl.NumberFormat().format(item.total_price)} تومان</td>
+                            </tr>
+                        `;
+                    });
+                } else {
+                    saleDetails += `<tr><td colspan="4">هیچ کالایی برای این فروش یافت نشد.</td></tr>`;
+                }
+
+                saleDetails += `
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            
+                            <button type="button" class="btn btn-block btn-primary details-button" style="margin: 0px; width: 15%;">جزییات</button>
+                        </div>
+                    </div>
+                `;
+                tableBody.append(saleDetails);
+            });
+        }
+      }
+
+
+      $(document).on('click', '.details-button', function() {
+        var detailsRow = $(this).closest(".box-body").find(".row").eq(1);
+        var button = $(this); 
+
+        detailsRow.slideToggle(300, function() {
+            button.text(detailsRow.is(":visible") ? "بستن جزییات" : "جزییات");
+        });
+      });
+
+
+      $('input[name="table_search"]').on('keyup', function () {
+        let searchText = $(this).val().trim();
+
+        $.ajax({
+            url: '<?= $app_config['base_url'] ?>process/sale-search-handler.php',
+            type: 'POST',
+            data: { customer_name: searchText,
+                user_id: <?= $currentUserData->id ?> },
+            dataType: 'json',
+            success: function (response) {
+                updateSalesTable(response);
+            },
+            error: function () {
+                alert('خطا در دریافت اطلاعات');
+            }
+        });
+    });
+
+  });
+
+</script>
 <!-- Bootstrap 3.3.7 -->
 <script src="<?= $app_config['base_url'] ?>assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- FastClick -->

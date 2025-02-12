@@ -108,8 +108,10 @@ function handlerAddSale(array $saleDataHandler , array $saleItemsDataHandler)
         $result = $SaleItemRepo->create([
             'sale_id' => $sale_id,
             'product_id' => $value['id'],
+            'product_name' => $value['productName'],
             'quantity' => $value['quantity'],
-            'unit_price' => $value['sellPrice'],
+            'cost_price' => $value['costPrice'],
+            'sell_price' => $value['sellPrice'],
             'total_price' => $value['totalPrice']
         ]);
 

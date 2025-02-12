@@ -330,7 +330,9 @@ use App\Helpers\urlHelper;
                     var newRow = `
                         <tr role="row">
                             <input type="hidden" name="id.${response.id}" value="${response.id}">
+                            <input type="hidden" name="productName.${response.id}" value="${response.name}">
                             <input type="hidden" name="totalPrice.${response.id}" value="${response.total_price}">
+                            <input type="hidden" name="costPrice.${response.id}" value="${response.cost_price}">
                             <input type="hidden" name="sellPrice.${response.id}" value="${response.sell_price}">
                             <input type="hidden" name="quantity.${response.id}" value="${response.quantity}">
 

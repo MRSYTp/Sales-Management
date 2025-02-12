@@ -20,7 +20,7 @@ class addSaleItemValidatorTest extends TestCase
     {
         return [
             'valid data' => [
-                ['id' => '1', 'totalPrice' => '500', 'sellPrice' => '200', 'quantity' => '2'],
+                ['id' => '1', 'productName' => 'example product name', 'costPrice' => '111' ,  'totalPrice' => '500', 'sellPrice' => '200', 'quantity' => '2'],
                 true,
             ],
             'missing id' => [
@@ -69,6 +69,22 @@ class addSaleItemValidatorTest extends TestCase
             ],
             'quantity is negative' => [
                 ['id' => '1', 'totalPrice' => '500', 'sellPrice' => '200', 'quantity' => '-2'],
+                false,
+            ],
+            'zero costPrice' => [
+                ['id' => '1', 'productName' => 'example product name', 'costPrice' => '0' ,  'totalPrice' => '500', 'sellPrice' => '200', 'quantity' => '2'],
+                false,
+            ],
+            'empty costPrice' => [
+                ['id' => '1', 'productName' => 'example product name', 'costPrice' => '' ,  'totalPrice' => '500', 'sellPrice' => '200', 'quantity' => '2'],
+                false,
+            ],
+            'missing productName' => [
+                ['id' => '1', 'costPrice' => '111' ,  'totalPrice' => '500', 'sellPrice' => '200', 'quantity' => '2'],
+                false,
+            ],
+            'empty productName' => [
+                ['id' => '1', 'productName' => '', 'costPrice' => '111' ,  'totalPrice' => '500', 'sellPrice' => '200', 'quantity' => '2'],
                 false,
             ],
         ];

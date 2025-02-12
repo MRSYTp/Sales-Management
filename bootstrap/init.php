@@ -4,6 +4,7 @@ require __DIR__ . '/../vendor/autoload.php';
 require __DIR__ . '/../autoload.php';
 
 session_start();
+date_default_timezone_set('Asia/Tehran');
 
 use App\Config\config;
 

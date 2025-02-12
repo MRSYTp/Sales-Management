@@ -18,15 +18,17 @@ class SaleItemRepository implements SaleItemInterface
 
     public function create(array $data): ?int
     {
-        $query = "INSERT INTO {$this->sale_itemModel->table} (sale_id , product_id , quantity , unit_price , total_price) 
-                  VALUES (:sale_id, :product_id, :quantity, :unit_price , :total_price)";
+        $query = "INSERT INTO {$this->sale_itemModel->table} (sale_id , product_id , product_name ,  quantity , cost_price ,sell_price , total_price) 
+                  VALUES (:sale_id, :product_id, :product_name , :quantity, :cost_price , :sell_price , :total_price)";
 
         $stmt = $this->sale_itemModel->db->prepare($query);
         $stmt->execute([
             'sale_id'        => $data['sale_id'],
             'product_id'  => $data['product_id'],
+            'product_name' => $data['product_name'],
             'quantity' => $data['quantity'],
-            'unit_price'    => $data['unit_price'],
+            'cost_price'    => $data['cost_price'],
+            'sell_price'    => $data['sell_price'],
             'total_price'      => $data['total_price']
         ]);
 
