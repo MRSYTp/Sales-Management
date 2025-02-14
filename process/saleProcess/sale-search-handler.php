@@ -1,6 +1,6 @@
 <?php 
 
-require '../bootstrap/init.php';
+require '../../bootstrap/init.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -24,6 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             foreach($results['sale'] as $result)
             {
                 $result->sale_date = verta($result->sale_date)->format('%d  %B  %Y');
+                $result->sell_profit = $SaleAnalysis->getProfit($result->id);
             }
     
             foreach($results['sale'] as $result)
@@ -31,6 +32,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $results['saleItem'][$result->id] = $SaleItemRepo->findAll($result->id);
                 
             }
+
+             
         }
 
         header('Content-Type: application/json');

@@ -286,7 +286,7 @@ $(document).ready(function () {
       }
 
       $.ajax({
-          url: '<?= $app_config['base_url'] ?>process/delete-product-handler.php',
+          url: '<?= $app_config['base_url'] ?>process/productProcess/delete-product-handler.php',
           type: 'POST',
           data: { id: productId },
           dataType: 'json',
@@ -316,7 +316,7 @@ $(document).ready(function () {
       let sellPrice = $('#sell_price').val();
 
       $.ajax({
-          url: '<?= $app_config['base_url'] ?>process/update-product-handler.php',
+          url: '<?= $app_config['base_url'] ?>process/productProcess/update-product-handler.php',
           type: 'POST',
           data: {
               id: productId,
@@ -350,7 +350,7 @@ $(document).ready(function () {
       $('input[name="sell_price"]').val('');
 
       $.ajax({
-          url: '<?= $app_config['base_url'] ?>process/show-product-in-modal-handler.php',
+          url: '<?= $app_config['base_url'] ?>process/productProcess/show-product-in-modal-handler.php',
           type: 'POST',
           data: { id: productId },
           dataType: 'json',
@@ -377,7 +377,7 @@ $(document).ready(function () {
         }
 
         $.ajax({
-            url: '<?= $app_config['base_url'] ?>process/sort-product-handler.php',
+            url: '<?= $app_config['base_url'] ?>process/productProcess/sort-product-handler.php',
             type: 'POST',
             data: { sort: sortValue,
                 user_id: <?= $currentUserData->id ?> },
@@ -395,7 +395,7 @@ $(document).ready(function () {
         let searchText = $(this).val().trim();
 
         $.ajax({
-            url: '<?= $app_config['base_url'] ?>process/product-search-handler.php',
+            url: '<?= $app_config['base_url'] ?>process/productProcess/product-search-handler.php',
             type: 'POST',
             data: { name: searchText,
                 user_id: <?= $currentUserData->id ?> },

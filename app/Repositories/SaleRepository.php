@@ -71,6 +71,43 @@ class SaleRepository implements SaleInterface
         return empty($result) ? null : $result;
     }
 
+    public function sortByPrice(int $user_id,string $sort) :  ?array
+    {
+
+        $sql = "SELECT * FROM {$this->saleModel->table} WHERE user_id = :user_id ORDER BY total_price $sort";
+        
+        return $this->findinDB($sql , $user_id);
+
+    }
+
+    public function sortByDate(int $user_id,string $sort) :  ?array
+    {
+
+        $sql = "SELECT * FROM {$this->saleModel->table} WHERE user_id = :user_id ORDER BY sale_date $sort";
+
+        return $this->findinDB($sql , $user_id);
+    }
+
+
+    public function sortByPhoneNumber(int $user_id) : ?array
+    {
+        $sql = "SELECT * FROM {$this->saleModel->table} WHERE user_id = :user_id AND customer_phone IS NOT NULL";
+        
+        return $this->findinDB($sql , $user_id);
+    }
+
+
+    private function findinDB(string $SQL  , int $user_id) : ?array
+    {
+        $stmt = $this->saleModel->db->prepare($SQL);
+        $stmt->execute([
+            'user_id' => $user_id
+        ]);
+        
+        $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+        return empty($result) ? null : $result;
+    }
+
     public function rollBack() : void 
     {
         $this->saleModel->rollBack();

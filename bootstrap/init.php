@@ -21,7 +21,7 @@ use App\Models\User;
 
 use App\Services\authService;
 use App\Services\JWTService;
-
+use App\Services\SaleAnalysisService;
 
 $app_config = config::get('app');
 $db_config = config::get('database.SM_DB');
@@ -37,12 +37,16 @@ $ProductRepo = new ProductRepository(new Product($PDO_connection));
 $SaleRepo = new SaleRepository(new Sale($PDO_connection));
 $SaleItemRepo = new SaleItemRepository(new SaleItem($PDO_connection));
 
-
 $JWTService = new JWTService(
     $JWTConfig['key'],
     $JWTConfig['algo'],
     $JWTConfig['expiry']
 );
 $Auth = new authService($JWTService , $cookieConfig);
+
+
+$SaleAnalysis = new SaleAnalysisService($SaleRepo , $SaleItemRepo , $Auth->getUserLoggedIn());
+
+
 
 

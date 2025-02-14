@@ -9,21 +9,35 @@ use App\Helpers\urlHelper;
   <title>  فروش ها | کنترل پنل</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <!-- Bootstrap 3.3.7 -->
-  <link rel="stylesheet" href="<?= $app_config['base_url'] ?>assets/css/bootstrap-theme.css">
-  <!-- Bootstrap rtl -->
-  <link rel="stylesheet" href="<?= $app_config['base_url'] ?>assets/css/rtl.css">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="<?= $app_config['base_url'] ?>assets/bower_components/font-awesome/css/font-awesome.min.css">
-    <!-- iCheck for checkboxes and radio inputs -->
-    <link rel="stylesheet" href="<?= $app_config['base_url'] ?>assets/plugins/iCheck/all.css">
-  <!-- Ionicons -->
-  <link rel="stylesheet" href="<?= $app_config['base_url'] ?>assets/bower_components/Ionicons/css/ionicons.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="<?= $app_config['base_url'] ?>assets/css/AdminLTE.css">
- 
-  <link rel="stylesheet" href="<?= $app_config['base_url'] ?>assets/css/skins/_all-skins.min.css">
+<!-- Bootstrap 3.3.7 -->
+<link rel="stylesheet" href="<?= $app_config['base_url'] ?>assets/css/bootstrap-theme.css">
+<!-- Bootstrap rtl -->
+<link rel="stylesheet" href="<?= $app_config['base_url'] ?>assets/css/rtl.css">
+<!-- Font Awesome -->
+<link rel="stylesheet" href="<?= $app_config['base_url'] ?>assets/bower_components/font-awesome/css/font-awesome.min.css">
+<!-- Ionicons -->
+<link rel="stylesheet" href="<?= $app_config['base_url'] ?>assets/bower_components/Ionicons/css/ionicons.min.css">
+<!-- iCheck for checkboxes and radio inputs -->
+<link rel="stylesheet" href="<?= $app_config['base_url'] ?>assets/plugins/iCheck/all.css">
+<!-- Theme style -->
+<link rel="stylesheet" href="<?= $app_config['base_url'] ?>assets/css/AdminLTE.css">
+<!-- Skins -->
+<link rel="stylesheet" href="<?= $app_config['base_url'] ?>assets/css/skins/_all-skins.min.css">
 
+<!-- Select2 -->
+<link rel="stylesheet" href="<?= $app_config['base_url'] ?>assets/bower_components/select2/dist/css/select2.min.css">
+<!-- Input Mask -->
+<link rel="stylesheet" href="<?= $app_config['base_url'] ?>assets/plugins/input-mask/inputmask.css">
+<!-- daterange picker -->
+<link rel="stylesheet" href="<?= $app_config['base_url'] ?>assets/bower_components/bootstrap-daterangepicker/daterangepicker.css">
+<!-- bootstrap datepicker -->
+<link rel="stylesheet" href="<?= $app_config['base_url'] ?>assets/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+<!-- bootstrap color picker -->
+<link rel="stylesheet" href="<?= $app_config['base_url'] ?>assets/bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css">
+<!-- bootstrap time picker -->
+<link rel="stylesheet" href="<?= $app_config['base_url'] ?>assets/plugins/timepicker/bootstrap-timepicker.min.css">
+<!-- Persian Datepicker -->
+<link rel="stylesheet" href="<?= $app_config['base_url'] ?>assets/css/persian-datepicker-0.4.5.min.css" />
 
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
@@ -171,6 +185,8 @@ use App\Helpers\urlHelper;
                       <option value="">انتخاب گزینه</option>
                       <option value="1">گرانترین</option>
                       <option value="2">ارزانترین</option>
+                      <option value="3">جدیدترین</option>
+                      <option value="4">قدیمیترین</option>
                   </select>
                 </div>
                 </div>
@@ -179,12 +195,9 @@ use App\Helpers\urlHelper;
                     <label style="display: block;">دسته بندی:</label>
                     <div class="form-group">
                         <label class="">
-                        <div class="icheckbox_minimal-blue checked" aria-checked="false" aria-disabled="false" style="position: relative;"><input type="checkbox" class="minimal" checked="" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>
-                        نمونه چک باکس
-                        </label>
-                        <label class="">
-                        <div class="icheckbox_minimal-blue checked" aria-checked="true" aria-disabled="false" style="position: relative;"><input type="checkbox" class="minimal" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>
-                        </label>
+                            <input id="justnumber" name="justnumber" type="checkbox">
+                          شماره همراه
+                      </label>
                     </div>
                     </div>
                 </div>
@@ -221,7 +234,7 @@ use App\Helpers\urlHelper;
                             </tr>
                             <tr>
                                 <th>سود شما از خرید:</th>
-                                <td>----- تومان</td>
+                                <td><?= number_format($SaleAnalysis->getProfit($sale->id)) ?> تومان</td>
                             </tr>
                             <tr>
                                 <th>زمان خرید:</th>
@@ -308,6 +321,7 @@ use App\Helpers\urlHelper;
                                             <tbody>
                                                 <tr><th style="width:50%">شماره مشتری:</th><td>${sale.customer_phone || 'ندارد'}</td></tr>
                                                 <tr><th>مبلغ کل خرید:</th><td>${new Intl.NumberFormat().format(sale.total_price)} تومان</td></tr>
+                                                <tr><th>سود شما از خرید:</th><td>${new Intl.NumberFormat().format(sale.sell_profit)} تومان</td></tr>
                                                 <tr><th>زمان خرید:</th><td>${sale.sale_date}</td></tr>
                                             </tbody>
                                         </table>
@@ -354,6 +368,44 @@ use App\Helpers\urlHelper;
         }
       }
 
+        $('select[name="example1_length"]').on('change', function () {
+          let sortValue = $(this).val();
+
+          if (sortValue === '') {
+              return;
+          }
+
+          $.ajax({
+              url: '<?= $app_config['base_url'] ?>process/saleProcess/sort-sale-handler.php',
+              type: 'POST',
+              data: { sort: sortValue,
+                  user_id: <?= $currentUserData->id ?> },
+              dataType: 'json',
+              success: function (response) {
+                  updateSalesTable(response);
+              },
+              error: function () {
+                  alert('خطا در دریافت اطلاعات');
+              }
+          });
+       });
+
+       $('#justnumber').on('change', function() {
+            let isChecked = $(this).is(':checked') ? 1 : 0; 
+            $.ajax({
+                url: '<?= $app_config['base_url'] ?>process/saleProcess/sale-justNumber-handler.php',
+                type: 'POST',
+                data: { justnumber: isChecked,
+                        user_id : <?= $currentUserData->id ?> 
+                 },
+                success: function(response) {
+                    updateSalesTable(response);
+                },
+                error: function(xhr, status, error) {
+                  alert('خطا در دریافت اطلاعات');
+                }
+            });
+        });
 
       $(document).on('click', '.details-button', function() {
         var detailsRow = $(this).closest(".box-body").find(".row").eq(1);
@@ -365,23 +417,23 @@ use App\Helpers\urlHelper;
       });
 
 
-      $('input[name="table_search"]').on('keyup', function () {
-        let searchText = $(this).val().trim();
+        $('input[name="table_search"]').on('keyup', function () {
+          let searchText = $(this).val().trim();
 
-        $.ajax({
-            url: '<?= $app_config['base_url'] ?>process/sale-search-handler.php',
-            type: 'POST',
-            data: { customer_name: searchText,
-                user_id: <?= $currentUserData->id ?> },
-            dataType: 'json',
-            success: function (response) {
-                updateSalesTable(response);
-            },
-            error: function () {
-                alert('خطا در دریافت اطلاعات');
-            }
-        });
-    });
+          $.ajax({
+              url: '<?= $app_config['base_url'] ?>process/saleProcess/sale-search-handler.php',
+              type: 'POST',
+              data: { customer_name: searchText,
+                  user_id: <?= $currentUserData->id ?> },
+              dataType: 'json',
+              success: function (response) {
+                  updateSalesTable(response);
+              },
+              error: function () {
+                  alert('خطا در دریافت اطلاعات');
+              }
+          });
+      });
 
   });
 
@@ -396,6 +448,28 @@ use App\Helpers\urlHelper;
 <script src="<?= $app_config['base_url'] ?>assets/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="<?= $app_config['base_url'] ?>assets/js/demo.js"></script>
+<!-- Select2 -->
+<script src="<?= $app_config['base_url'] ?>assets/bower_components/select2/dist/js/select2.full.min.js"></script>
+<!-- InputMask -->
+<script src="<?= $app_config['base_url'] ?>assets/plugins/input-mask/jquery.inputmask.js"></script>
+<script src="<?= $app_config['base_url'] ?>assets/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+<script src="<?= $app_config['base_url'] ?>assets/plugins/input-mask/jquery.inputmask.extensions.js"></script>
+<!-- date-range-picker -->
+<script src="<?= $app_config['base_url'] ?>assets/bower_components/moment/min/moment.min.js"></script>
+<script src="<?= $app_config['base_url'] ?>assets/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+<!-- bootstrap datepicker -->
+<script src="<?= $app_config['base_url'] ?>assets/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+<!-- bootstrap color picker -->
+<script src="<?= $app_config['base_url'] ?>assets/bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
+<!-- bootstrap time picker -->
+<script src="<?= $app_config['base_url'] ?>assets/plugins/timepicker/bootstrap-timepicker.min.js"></script>
+<!-- SlimScroll -->
+<script src="<?= $app_config['base_url'] ?>assets/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+
+<!-- babakhani datepicker -->
+<script src="<?= $app_config['base_url'] ?>assets/js/persian-date-0.1.8.min.js"></script>
+<script src="<?= $app_config['base_url'] ?>assets/js/persian-datepicker-0.4.5.min.js"></script>
+
 <script>
     $(document).ready(function () {
         $('#tarikh').persianDatepicker({

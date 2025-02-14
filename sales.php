@@ -24,7 +24,5 @@ if ($action == 'logout') {
 $currentUserData = $UserRepo->findById($_SESSION[$sessionConfig['user_id_session']]);
 $Sales = $SaleRepo->findAll($currentUserData->id);
 
-// echo '<pre>';
-// var_dump($saleitems);
-// echo '</pre>';
+
 include 'tpl/tpl-sales.php';

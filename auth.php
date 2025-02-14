@@ -79,7 +79,6 @@ function handleLogin(array $params){
     global $Auth;
 
     $validator = new loginValidator();
-
     
 
     if (!$validator->validate($params)) {

@@ -130,6 +130,84 @@ class SaleTest extends TestCase
         $this->assertNull($result);
     }
 
+    public function test_method_sortByPrice_should_return_array()
+    {   
+        $this->InsertDataInDB();
+        $this->InsertDataInDB(['total_price' => 800]);
+        $this->InsertDataInDB(['total_price' => 1200]);
+        $this->InsertDataInDB(['total_price' => 44444]);
+        $this->InsertDataInDB(['total_price' => 233]);
+
+
+        $result = $this->SaleRepository->sortByPrice(1,'ASC');
+        $result2 = $this->SaleRepository->sortByPrice(1,'DESC');
+
+        $this->assertNotNull($result);
+        $this->assertIsArray($result);
+        $this->assertCount(5,$result);
+        $this->assertEquals(233,$result[0]->total_price);
+        $this->assertEquals(44444,$result2[0]->total_price);
+    }
+
+    public function test_method_sortByPrice_should_return_null_when_sale_not_found()
+    {
+        $result = $this->SaleRepository->sortByPrice(1,'ASC');
+
+        $this->assertNull($result);
+    }
+
+
+    public function test_method_sortByDate_should_return_array()
+    {
+        $this->InsertDataInDB();
+        $this->InsertDataInDB(['sale_date' => date('Y-m-d' , '1739198671')]);
+        $this->InsertDataInDB(['total_price' => 300 , 'sale_date' => date('Y-m-d' , '1719112671')]); //k
+        $this->InsertDataInDB(['sale_date' => date('Y-m-d' , '1739118641')]);
+        $this->InsertDataInDB(['total_price' => 200 , 'sale_date' => date('Y-m-d' , '1759128671')]);//z
+
+
+        $result = $this->SaleRepository->sortByDate(1,'ASC');
+        $result2 = $this->SaleRepository->sortByDate(1,'DESC');
+
+
+        $this->assertNotNull($result);
+        $this->assertIsArray($result);
+        $this->assertCount(5,$result);
+        $this->assertEquals(300,$result[0]->total_price);
+        $this->assertEquals(200,$result2[0]->total_price);
+    }
+
+    public function test_method_sortByDate_should_return_null_when_sale_not_found()
+    {
+        $result = $this->SaleRepository->sortByDate(1,'ASC');
+
+        $this->assertNull($result);
+    }
+
+
+    public function test_method_sortByPhoneNumber_should_return_array()
+    {
+        $this->InsertDataInDB();
+        $this->InsertDataInDB();
+        $this->InsertDataInDB(['customer_phone' => null]);
+
+
+        $result = $this->SaleRepository->sortByPhoneNumber(1);
+
+        $this->assertIsArray($result);
+        $this->assertCount(2,$result);
+        // $this->assertEquals(09123456789, $result[0]->customer_phone);
+    }
+
+
+    public function test_method_sortByPhoneNumber_should_return_null_when_sale_not_found()
+    {
+        $result = $this->SaleRepository->sortByPhoneNumber(11111);
+
+        $this->assertNull($result);
+    }
+
+    
     private function InsertDataInDB(array $option = []) : int
     {
         $data = [
@@ -137,7 +215,7 @@ class SaleTest extends TestCase
             'customer_name' => 'John Doe',
             'customer_phone' => '09123456789',
             'total_price' => 1000,
-            'sale_date' => '1739118671'
+            'sale_date' => date('Y-m-d' , '1739118671')
         ];
 
         $data = array_merge($data, $option);

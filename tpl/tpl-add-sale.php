@@ -318,7 +318,7 @@ use App\Helpers\urlHelper;
 
 
             $.ajax({
-                url: 'process/sale-product-handler.php',
+                url: 'process/saleProcess/sale-product-handler.php',
                 method: 'POST',
                 data: {
                     product_id: productId,
