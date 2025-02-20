@@ -83,13 +83,16 @@ class SaleItemTest extends TestCase
     private function InsertSaleItemInDB(array $option = []) : int 
     {
         $userdata = array_merge([
+            'user_id'        => 1,
             'sale_id'        => 1,
             'product_id'  => 1,
             'product_name' => 'product name test',
             'quantity' => 2,
             'cost_price'    => 200,
             'sell_price'    => 300,
-            'total_price'      => 600
+            'total_price'      => 600,
+            'sale_date'  =>  date('Y-m-d' , '1739118671')
+
         ], $option);
         
         return $this->SaleItemRepository->create($userdata);

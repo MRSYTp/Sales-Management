@@ -21,7 +21,7 @@ use App\Models\User;
 
 use App\Services\authService;
 use App\Services\JWTService;
-use App\Services\SaleAnalysisService;
+
 
 $app_config = config::get('app');
 $db_config = config::get('database.SM_DB');
@@ -44,8 +44,6 @@ $JWTService = new JWTService(
 );
 $Auth = new authService($JWTService , $cookieConfig);
 
-
-$SaleAnalysis = new SaleAnalysisService($SaleRepo , $SaleItemRepo , $Auth->getUserLoggedIn());
 
 
 

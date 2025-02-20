@@ -106,13 +106,16 @@ function handlerAddSale(array $saleDataHandler , array $saleItemsDataHandler)
 
     foreach ($saleItemsDataHandler as $key => $value) {
         $result = $SaleItemRepo->create([
+            'user_id' => $currentUserData->id,
             'sale_id' => $sale_id,
             'product_id' => $value['id'],
             'product_name' => $value['productName'],
             'quantity' => $value['quantity'],
             'cost_price' => $value['costPrice'],
             'sell_price' => $value['sellPrice'],
-            'total_price' => $value['totalPrice']
+            'total_price' => $value['totalPrice'],
+            'sale_date' => date('Y-m-d' , $saleDataHandler['sale_date'])
+
         ]);
 
         if (is_null($result)) {

@@ -1,4 +1,6 @@
-<?php 
+<?php
+
+use App\Services\SaleAnalysisService;
 
 require '../../bootstrap/init.php';
 
@@ -11,7 +13,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (!is_numeric($_POST['sort']) || !is_numeric($_POST['user_id'])) {
         exit;
     }
-
+    
+    $SaleAnalysis = new SaleAnalysisService($SaleRepo , $SaleItemRepo , $Auth->getUserLoggedIn());
     $results['sale'] = null;
 
     if ($_POST['sort'] == 1) {

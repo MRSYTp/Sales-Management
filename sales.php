@@ -3,6 +3,7 @@ require 'bootstrap/init.php';
 
 use App\Helpers\redirectHelper;
 use App\Helpers\urlHelper;
+use App\Services\SaleAnalysisService;
 
 if (!$Auth->isLoggedIn()) {
 
@@ -22,6 +23,9 @@ if ($action == 'logout') {
 }
 
 $currentUserData = $UserRepo->findById($_SESSION[$sessionConfig['user_id_session']]);
+
+$SaleAnalysis = new SaleAnalysisService($SaleRepo , $SaleItemRepo , $Auth->getUserLoggedIn());
+
 $Sales = $SaleRepo->findAll($currentUserData->id);
 
 

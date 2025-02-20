@@ -2,7 +2,7 @@
 namespace Tests\Functional;
 
 use App\Config\config;
-use App\Interfaces\SaleAnalysisServiceInterfase;
+use App\Interfaces\SaleAnalysisServiceInterface;
 use App\Interfaces\SaleInterface;
 use App\Interfaces\SaleItemInterface;
 use App\Models\Sale;
@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
 
 class SaleAnalysisServiceTest extends TestCase
 {
-    private SaleAnalysisServiceInterfase $SaleAnalysis;
+    private SaleAnalysisServiceInterface $SaleAnalysis;
     private SaleInterface $SaleRepository;
     private SaleItemInterface $SaleItemRepository;
     private PDO $connection;
@@ -78,13 +78,15 @@ class SaleAnalysisServiceTest extends TestCase
     private function InsertSaleItemDataInDB(array $saleItemOption) : void
     {
         $saleItemData = [
+            'user_id' => 1,
             'sale_id'        => 1,
             'product_id'  => 1,
             'product_name' => 'product name test',
             'quantity' => 1,
             'cost_price'    => 200,
             'sell_price'    => 300,
-            'total_price'      => 600
+            'total_price'      => 600,
+            'sale_date' => date('Y-m-d' , '1739118671')
         ];
 
         $saleItemData = array_merge($saleItemData , $saleItemOption);

@@ -106,16 +106,6 @@ use App\Helpers\urlHelper;
         </div>
       </div>
 
-      <form action="#" method="get" class="sidebar-form">
-        <div class="input-group">
-          <input type="text" name="q" class="form-control" placeholder="جستجو">
-          <span class="input-group-btn">
-                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-                </button>
-              </span>
-        </div>
-      </form>
-
       <ul class="sidebar-menu tree" data-widget="tree">
         <li class="header">منو</li>
         <li class="treeview">
@@ -129,6 +119,31 @@ use App\Helpers\urlHelper;
           <ul class="treeview-menu" style="display: none;">
             <li><a href="<?= $app_config['base_url'] ?>products.php"><i class="fa fa-circle-o"></i>محصولات</a></li>
             <li><a href="<?= $app_config['base_url'] ?>add-product.php"><i class="fa fa-circle-o"></i>افزودن محصول</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-shopping-cart"></i>
+            <span>فروش ها</span>
+            <span class="pull-left-container">
+              <i class="fa fa-angle-right pull-left"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu" style="display: none;">
+            <li><a href="<?= $app_config['base_url'] ?>sales.php"><i class="fa fa-circle-o"></i>فروش ها</a></li>
+            <li><a href="<?= $app_config['base_url'] ?>add-sale.php"><i class="fa fa-circle-o"></i>افزودن فروش</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-signal"></i>
+            <span>مدیریت</span>
+            <span class="pull-left-container">
+              <i class="fa fa-angle-right pull-left"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu" style="display: none;">
+            <li><a href="<?= $app_config['base_url'] ?>analysis.php"><i class="fa fa-circle-o"></i>آنالیز فروش</a></li>
           </ul>
         </li>
       </ul>
@@ -145,9 +160,9 @@ use App\Helpers\urlHelper;
         افزودن فروش جدید
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> خانه</a></li>
-        <li class="active">محصول ها</li>
-        <li class="active">افزودن محصول</li>
+        <li><a href="<?= $app_config['base_url'] ?>"><i class="fa fa-dashboard"></i> خانه</a></li>
+        <li class="active">فروش ها</li>
+        <li class="active">افزودن فروش</li>
       </ol>
     </section>
 
@@ -189,7 +204,7 @@ use App\Helpers\urlHelper;
                             <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
                             </div>
-                            <input  type="text" id="tarikh" class="form-control pull-right">
+                            <input type="text" id="tarikh" class="form-control pull-right">
                             <input name="sale_date" type="hidden" id="tarikhAlt" class="form-control pull-right">
                             <input type="hidden" name="total_price" id="total_sell_price_input">
                         </div>
@@ -198,7 +213,7 @@ use App\Helpers\urlHelper;
                     <div class="form-group">
                             <label style="display: block;">انتخاب محصول:</label>
                             <div class="input-group" style="display: inline;">
-                            <select id="product" class="form-control" style="width: 74%; display: inline;" <?= is_null($products) ? 'disabled' : '';  ?>>
+                            <select id="product" class="form-control" style="width: 74%; display: inline; z-index: 0;" <?= is_null($products) ? 'disabled' : '';  ?>>
                                 <?php if(is_null($products)): ?>
                                 <option>محصولی ندارید</option>
                                 <?php endif; ?>
@@ -206,8 +221,8 @@ use App\Helpers\urlHelper;
                                 <option value="<?= $product->id ?>"><?= $product->name ?></option>
                                 <?php endforeach; ?>
                             </select>
-                            <input type="number" id="product-quantity" class="form-control" placeholder="تعداد" min="1" max="100" style="width: 16%; display: inline;" <?= is_null($products) ? 'disabled' : '';  ?>>
-                            <button type="button" id="add-product" class="btn bg-navy btn-flat" style="width: 9%; display: inline;" <?= is_null($products) ? 'disabled' : '';  ?>><li class="fa fa-plus"></li></button>
+                            <input type="number" id="product-quantity" class="form-control" placeholder="تعداد" min="1" max="100" style="width: 16%; display: inline; z-index: 0;" <?= is_null($products) ? 'disabled' : '';  ?>>
+                            <button type="button" id="add-product" class="btn bg-navy btn-flat" style="width: 9%; display: inline; z-index: 0;" <?= is_null($products) ? 'disabled' : '';  ?>><li class="fa fa-plus"></li></button>
                             </div>
                     </div>
                 </div>
@@ -253,7 +268,7 @@ use App\Helpers\urlHelper;
   </div>
   <!-- /.content-wrapper -->
   <footer class="main-footer text-left">
-    <strong>Copyleft &copy; 2014-2017 <a href="https://adminlte.io">Almsaeed Studio</a> & <a href="https://netparadis.com">NetParadis</a></strong>
+  <strong>Copyleft &copy; 2025 <a href="https://iammohamadrezasalehi.ir/">Mr Salehi</a></strong>
   </footer>
   <div class="control-sidebar-bg"></div>
 </div>
@@ -389,18 +404,21 @@ use App\Helpers\urlHelper;
 <script src="<?= $app_config['base_url'] ?>assets/js/persian-datepicker-0.4.5.min.js"></script>
 <!-- Page script -->
 <script>
-    $(document).ready(function () {
-        $('#tarikh').persianDatepicker({
-            altField: '#tarikhAlt',
-            altFormat: 'X',
-            format: 'D MMMM YYYY HH:mm a',
-            observer: true,
-            timePicker: {
-                enabled: true
-            },
-        });
-    });
-  $(function () {
+      $(document).ready(function () {
+          let today = new persianDate().startOf('day');
+
+          $('#tarikh').persianDatepicker({
+              altField: '#tarikhAlt',
+              altFormat: 'X',
+              format: 'D MMMM YYYY',
+              observer: true,
+              timePicker: {
+                  enabled: false
+              },
+              minDate: today
+          });
+      });
+    $(function () {
     //Initialize Select2 Elements
     $('.select2').select2()
 
@@ -465,6 +483,9 @@ use App\Helpers\urlHelper;
       showInputs: false
     })
   })
+
+
+
 </script>
 </body>
 </html>

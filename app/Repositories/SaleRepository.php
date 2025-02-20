@@ -40,12 +40,54 @@ class SaleRepository implements SaleInterface
         return $id > 0 ? $id : null;
     }
 
-    public function findAll(int $user_id) : ?array
+    public function findAll(int $user_id, ?int $time = null, ?string $date = null) : ?array
     {
-        $stmt = $this->saleModel->db->query("SELECT * FROM {$this->saleModel->table} WHERE user_id = $user_id");
+        $condition = '';
+        if ($time !== null) {
+            $condition = "AND sale_date >= DATE_SUB(NOW(), INTERVAL {$time} DAY)";
+        }
+    
+        $condition2 = '';
+        if ($date !== null) {
+            $condition2 = "AND DATE(sale_date) = :date ";
+        }
+
+        $stmt = $this->saleModel->db->prepare("SELECT * FROM {$this->saleModel->table} WHERE user_id = :user_id {$condition} {$condition2} ORDER BY created_at DESC");
+        
+
+        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+        
+        if ($date !== null) {
+            $stmt->bindParam(':date', $date, PDO::PARAM_STR);
+        }
+    
+        $stmt->execute();
         $results = $stmt->fetchAll(PDO::FETCH_OBJ);
+        
         return empty($results) ? null : $results;
     }
+
+
+    public function findSalesByMonth(int $user_id, ?string $month = null) : ?array
+    {
+        
+        $condition = "AND DATE_FORMAT(sale_date, '%Y-%m') = :month"; 
+
+        $month = !is_null($month) ? $month : date('Y-m');
+    
+        $stmt = $this->saleModel->db->prepare("SELECT * FROM {$this->saleModel->table} WHERE user_id = :user_id {$condition}");
+        
+    
+        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+        $stmt->bindParam(':month', $month , PDO::PARAM_STR); 
+
+        $stmt->execute();
+        $results = $stmt->fetchAll(PDO::FETCH_OBJ);
+        
+        return empty($results) ? null : $results;
+    }
+
+    
 
     public function delete(int $id) : bool
     {
@@ -69,6 +111,32 @@ class SaleRepository implements SaleInterface
         
         $result = $stmt->fetchAll(PDO::FETCH_OBJ);
         return empty($result) ? null : $result;
+    }
+
+    public function getCustomers(int $user_id) : ?array
+    {
+        $sql = "SELECT * FROM {$this->saleModel->table} WHERE user_id = :user_id GROUP BY customer_name";
+
+        return $this->findinDB($sql , $user_id);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    public function sortByBestCustomer(int $user_id, string $sort) : ?array
+    {
+        $sql = "SELECT *, SUM(total_price) as total_spent FROM {$this->saleModel->table} 
+        WHERE user_id = :user_id GROUP BY customer_name ORDER BY total_spent $sort";
+
+        return $this->findinDB($sql , $user_id);
     }
 
     public function sortByPrice(int $user_id,string $sort) :  ?array
