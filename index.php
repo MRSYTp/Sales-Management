@@ -1,9 +1,10 @@
-<?php
+<?php 
+
+require 'bootstrap/init.php';
 
 use App\Helpers\redirectHelper;
 use App\Helpers\urlHelper;
-
-require 'bootstrap/init.php';
+use App\Services\GravatarService;
 
 if (!$Auth->isLoggedIn()) {
 
@@ -15,4 +16,17 @@ if (!$Auth->isLoggedIn()) {
     
 }
 
-redirectHelper::redirect(urlHelper::siteUrl('add-product.php'));
+$action = $_GET['action'] ?? null;
+if ($action == 'logout') {
+    session_destroy();
+    $Auth->logout();
+    redirectHelper::redirect(urlHelper::siteUrl('auth.php?action=login'));
+}
+
+$currentUserData = $UserRepo->findById($_SESSION[$sessionConfig['user_id_session']]);
+
+$Gravatar = new GravatarService($currentUserData->email);
+$profileURL = $Gravatar->getGravatarUrl();
+
+
+include 'tpl/tpl-index.php';

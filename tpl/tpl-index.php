@@ -139,65 +139,50 @@ use App\Helpers\urlHelper;
     <!-- /.sidebar -->
   </aside>
 
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
+  <div class="content-wrapper" style="min-height: 915.875px;">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        افزودن محصول جدید
+        به پنل مدیریت فروش
+        <small>خوش امدید</small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="<?= $app_config['base_url'] ?>"><i class="fa fa-dashboard"></i> خانه</a></li>
-        <li class="active">محصول ها</li>
-        <li class="active">افزودن محصول</li>
+        <li><i class="fa fa-dashboard"></i> خانه</li>
       </ol>
     </section>
 
     <!-- Main content -->
     <section class="content">
-      <div class="row">
-        <!-- left column -->
-        <div class="col-md-6">
-          <!-- general form elements -->
-          <div class="box box-primary">
-            <div class="box-header with-border">
-            </div>
-            <!-- /.box-header -->
-            <!-- form start -->
-            <form role="form" action="<?= urlHelper::siteUrl('add-product.php') ?>" method="post">
-              <div class="box-body">
-                <div class="form-group">
-                  <label for="exampleInputEmail1">نام محصول:</label>
-                  <input name="name" type="text" class="form-control" id="exampleInputEmail1" placeholder="نام محصول">
-                </div>
 
-                <div class="form-group">
-                  <label for="exampleInputEmail1">قیمت خرید:</label>
-                  <input name="cost_price" type="text" class="form-control" id="exampleInputEmail1" placeholder="قیمت خرید">
-                </div>
-
-                <div class="form-group">
-                  <label for="exampleInputEmail1">قیمت فروش:</label>
-                  <input name="sell_price" type="text" class="form-control" id="exampleInputEmail1" placeholder="قیمت فروش">
-                </div>
-              </div>
-              <!-- /.box-body -->
-
-              <div class="box-footer">
-                <button type="submit" class="btn btn-primary">ارسال</button>
-                <button type="reset" class="btn btn-danger">انصراف</button>
-              </div>
-            </form>
-          </div>
-          <!-- /.box -->
+      <!-- Default box -->
+      <div class="box">
+        <div class="box-header with-border">
+          <h3 class="box-title">توضیحات</h3>
         </div>
-        <!--/.col (left) -->
+        <div class="box-body">
+            <p>تشکر از اینکه این پنل رو برای مدیریت فروش های خود انتخاب کردین در زیر توضیحات هر یک از بخش ها داده میشه که بهتر قابل استفاده باشه.</p>
+            <br>
+            <p><strong style="color: #00a1ff;">افزودن محصول :</strong> در این بخش میتوانید محصولات خود را اضافه بکنید که بتوانید ان ها را در بعد برای فروش ثبت کرد.</p>
+            <br>
+            <p><strong style="color: #00a1ff;">محصولات :</strong> در این بخش میتوانید که محصولاتی که اضافه کردین رو مشاهده کنید و مدیریت کنید و ویرایش کنید قابلیت های جستجو و مرتب بندی دارد که میتوانید استفاده کنید.</p>
+            <br>
+            <p><strong style="color: #db0d58;">افزودن فروش :</strong> در این بخش میتوانید فروش خودتون را ثبت کنید بر اساس محصولاتی که قبلا اضافه کردین که نام مشتری و شماره مشتری و تاریخ فروش رو ثبت میکنید با محصولاتی که میخواهید بفروشید در ان جا مجموع قیمت خرید محاسبه خواهد شد و به شما تحویل داده شد.</p>
+            <br>
+            <p><strong style="color: #db0d58;">فروش ها :</strong>در این بخش میتوانید فروش هایی که ثبت کرده اید رو مشاهده کنید با جزییات محصولاتی که در ان فروش فروخته اید و هر فروش سود شما از ان فروش رو میزند و قابلیت های ازجمله جستجو , مرتب بندی , دسته بندی هم وجود دارد که میتوانید استفاده کنید.</p>
+            <br>
+            <p><strong style="color: #e6ad52;">آنالیز فروش :</strong> قلب این پنل یعنی آنالیز فروش در انجا میتوان تعداد محصولاتی که فروخته اید , تعداد فروش , تعداد مشتری و پرفروش ترین محصول , پرسود ترین محصول , بهترین فروش , بهترین مشتری و نمودار هایی برای انالیز فروش محصولات خود و درصد انها و نمودار فروش هفتگی ماهانه و سالانه را مشاهده و برسی کنید.</p>
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+        ساخته شده توسط محمدرضا صالحی
+        </div>
+        <!-- /.box-footer-->
       </div>
-      <!-- /.row -->
+      <!-- /.box -->
+
     </section>
     <!-- /.content -->
   </div>
-  <!-- /.content-wrapper -->
   <footer class="main-footer text-left">
   <strong>Copyleft &copy; 2025 <a href="https://iammohamadrezasalehi.ir/">Mr Salehi</a></strong>
   </footer>
