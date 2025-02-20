@@ -1,6 +1,6 @@
 <?php
 
-use App\Services\SaleAnalysisService;
+use App\Services\SaleChartService;
 
 require '../../bootstrap/init.php';
 
@@ -15,8 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         exit;
     }
 
-
-    $SaleAnalysis = new SaleAnalysisService($SaleRepo , $SaleItemRepo , $Auth->getUserLoggedIn());
+    $SaleAnalysis = new SaleChartService($SaleRepo , $Auth->getUserLoggedIn());
 
     $date = $_GET['time'];
 

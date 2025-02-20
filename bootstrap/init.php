@@ -21,7 +21,7 @@ use App\Models\User;
 
 use App\Services\authService;
 use App\Services\JWTService;
-
+use App\Services\SalePriceService;
 
 $app_config = config::get('app');
 $db_config = config::get('database.SM_DB');
@@ -43,6 +43,7 @@ $JWTService = new JWTService(
     $JWTConfig['expiry']
 );
 $Auth = new authService($JWTService , $cookieConfig);
+$salePriceService = new SalePriceService($SaleRepo);
 
 
 

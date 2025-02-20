@@ -1,6 +1,6 @@
 <?php
 
-use App\Services\SaleAnalysisService;
+use App\Services\ProductChartService;
 
 require '../../bootstrap/init.php';
 
@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     }
 
 
-    $SaleAnalysis = new SaleAnalysisService($SaleRepo , $SaleItemRepo , $Auth->getUserLoggedIn());
+    $SaleAnalysis = new ProductChartService($SaleItemRepo , $Auth->getUserLoggedIn());
 
     $percentageProducts = $SaleAnalysis->getPercentageProductBySale();
     

@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit;
     }
 
-        $SaleAnalysis = new SaleAnalysisService($SaleRepo , $SaleItemRepo , $Auth->getUserLoggedIn());
+    $SaleAnalysis = new SaleAnalysisService($SaleRepo , $SaleItemRepo , $salePriceService ,$Auth->getUserLoggedIn());
         $results['sale'] = $SaleRepo->search($_POST);
 
         if (is_null($results['sale'])) {

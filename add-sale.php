@@ -4,6 +4,7 @@ require 'bootstrap/init.php';
 use App\Helpers\redirectHelper;
 use App\Helpers\urlHelper;
 use App\Helpers\messageHelper;
+use App\Services\GravatarService;
 use App\Validators\addSaleItemValidator;
 use App\Validators\addSaleValidator;
 
@@ -26,6 +27,9 @@ if ($action == 'logout') {
 
 $currentUserData = $UserRepo->findById($_SESSION[$sessionConfig['user_id_session']]);
 $products = $ProductRepo->findAll($currentUserData->id);
+
+$Gravatar = new GravatarService($currentUserData->email);
+$profileURL = $Gravatar->getGravatarUrl();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 

@@ -3,6 +3,7 @@ require 'bootstrap/init.php';
 
 use App\Helpers\redirectHelper;
 use App\Helpers\urlHelper;
+use App\Services\GravatarService;
 use App\Services\SaleAnalysisService;
 
 if (!$Auth->isLoggedIn()) {
@@ -24,7 +25,10 @@ if ($action == 'logout') {
 
 $currentUserData = $UserRepo->findById($_SESSION[$sessionConfig['user_id_session']]);
 
-$SaleAnalysis = new SaleAnalysisService($SaleRepo , $SaleItemRepo , $Auth->getUserLoggedIn());
+$SaleAnalysis = new SaleAnalysisService($SaleRepo , $SaleItemRepo , $salePriceService ,$Auth->getUserLoggedIn());
+
+$Gravatar = new GravatarService($currentUserData->email);
+$profileURL = $Gravatar->getGravatarUrl();
 
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {

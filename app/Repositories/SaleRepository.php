@@ -40,7 +40,7 @@ class SaleRepository implements SaleInterface
         return $id > 0 ? $id : null;
     }
 
-    public function findAll(int $user_id, ?int $time = null, ?string $date = null) : ?array
+    public function findAll(int $user_id,  $time = null, $date = null) : ?array
     {
         $condition = '';
         if ($time !== null) {
