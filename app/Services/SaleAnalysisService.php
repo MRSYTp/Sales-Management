@@ -36,9 +36,9 @@ class SaleAnalysisService implements SaleAnalysisServiceInterface
         }else {
 
             $totalPrice = $this->getTotalPrice();
-            $saleItems = $this->saleItemRepo->findAllByUserId();
+            $saleItems = $this->saleItemRepo->findAllByUserId($this->userId);
         }
-
+        
         if ($saleItems === null) {
             return null;
         }

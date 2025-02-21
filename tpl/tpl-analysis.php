@@ -208,8 +208,11 @@ use App\Helpers\urlHelper;
 
               </div>
               <div class="box-tools pull-right">
-                <button type="submit" class="btn btn-block btn-info btn-sm">Go</button>
-                <button type="submit" class="btn btn-block btn-info btn-sm">Go</button>
+                  <div class="btn-group">
+                      <button type="button" class="btn btn-default"><a href="?analysisBy=7-days-ago">هفتگی</a></button>
+                      <button type="button" class="btn btn-default"><a href="?analysisBy=1-month-ago">ماهانه</a></button>
+                      <button type="button" class="btn btn-default"><a href="?analysisBy=1-year-ago">سالانه</a></button>
+                    </div>
               </div>
             </div>
             <!-- /.box-header -->
@@ -235,7 +238,7 @@ use App\Helpers\urlHelper;
                 <!-- /.col -->
                 <div class="col-sm-3 col-xs-6">
                   <div class="description-block border-right">
-                    <span class="description-percentage text-yellow"><i class="fa fa-caret-left"></i> 0%</span>
+                    <!-- <span class="description-percentage text-yellow"><i class="fa fa-caret-left"></i> 0%</span> -->
                     <h5 class="description-header"><?= !is_null($totalSalePrice) ? number_format($totalSalePrice) : 0?> تومان</h5>
                     <span class="description-text">فروش کل</span>
                   </div>
@@ -244,7 +247,7 @@ use App\Helpers\urlHelper;
                 <!-- /.col -->
                 <div class="col-sm-3 col-xs-6">
                   <div class="description-block border-right">
-                    <span class="description-percentage text-green"><i class="fa fa-caret-up"></i> 20%</span>
+                    <!-- <span class="description-percentage text-green"><i class="fa fa-caret-up"></i> 20%</span> -->
                     <h5 class="description-header"><?= !is_null($totalSaleProfit) ? number_format($totalSaleProfit) : 0?> تومان</h5>
                     <span class="description-text">سود کل</span>
                   </div>
@@ -252,7 +255,7 @@ use App\Helpers\urlHelper;
                 </div>
                 <div class="col-sm-3 col-xs-6">
                   <div class="description-block border-right">
-                    <span class="description-percentage text-green"><i class="fa fa-caret-up"></i> 17%</span>
+                    <!-- <span class="description-percentage text-green"><i class="fa fa-caret-up"></i> 17%</span> -->
                     <h5 class="description-header"><?= !is_null($totalSaleCount) ? $totalSaleCount : 0?></h5>
                     <span class="description-text">تعداد فروش</span>
                   </div>
@@ -261,7 +264,7 @@ use App\Helpers\urlHelper;
                 <!-- /.col -->
                 <div class="col-sm-3 col-xs-6">
                   <div class="description-block">
-                    <span class="description-percentage text-red"><i class="fa fa-caret-down"></i> 18%</span>
+                    <!-- <span class="description-percentage text-red"><i class="fa fa-caret-down"></i> 18%</span> -->
                     <h5 class="description-header"><?= !is_null($totalSaleProductCount) ? $totalSaleProductCount : 0?></h5>
                     <span class="description-text">تعداد محصول فروخته شده</span>
                   </div>

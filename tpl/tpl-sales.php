@@ -172,15 +172,15 @@ use App\Helpers\urlHelper;
             <div class="box-body">
                 <div class="col-sm-12">
                     <div id="example1_filter" class="dataTables_filter">
-                        <label>
-                            جستجو:
-                            <input type="search" class="form-control input-sm" name="table_search" placeholder="" aria-controls="example1">
+                        <label style="margin-bottom: 7px;">
+                            جستجو:    
                         </label>
+                        <input type="search" class="form-control input-sm" name="table_search" placeholder="" aria-controls="example1">
                     </div>
                 </div>
                 <div class="col-sm-12" style="margin-top: 15px;">
                 <div class="dataTables_length" id="example1_length">
-                  <label style="display: inline-block;">مرتب سازی:</label>
+                  <label style="display: inline-block; margin-bottom: 7px;">مرتب سازی:</label>
                   <select name="example1_length" aria-controls="example1" class="form-control input-sm">
                       <option value="">انتخاب گزینه</option>
                       <option value="1">گرانترین</option>
@@ -192,7 +192,7 @@ use App\Helpers\urlHelper;
                 </div>
                 <div class="col-sm-12" style="margin-top: 15px;">
                     <div id="example1_filter" class="dataTables_filter">
-                    <label style="display: block;">دسته بندی:</label>
+                    <label style="display: block; margin-bottom: 7px;">دسته بندی:</label>
                     <div class="form-group">
                         <label class="">
                             <input id="justnumber" name="justnumber" type="checkbox">

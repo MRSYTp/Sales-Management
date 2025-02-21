@@ -9,7 +9,6 @@ class ProductRepository implements ProductInterface
 {
 
     private Product $productModel;
-    private int $user_id;
 
     public function __construct(Product $productModel)
     {
