@@ -18,12 +18,9 @@ use App\Helpers\urlHelper;
   <link rel="stylesheet" href="<?= $app_config['base_url'] ?>assets/bower_components/font-awesome/css/font-awesome.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="<?= $app_config['base_url'] ?>assets/bower_components/Ionicons/css/ionicons.min.css">
-  <!-- jvectormap -->
-  <link rel="stylesheet" href="<?= $app_config['base_url'] ?>assets/bower_components/jvectormap/jquery-jvectormap.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="<?= $app_config['base_url'] ?>assets/css/AdminLTE.css">
-  <!-- AdminLTE Skins. Choose a skin from the css/skins
-       folder instead of downloading all of them to reduce the load. -->
+
   <link rel="stylesheet" href="<?= $app_config['base_url'] ?>assets/css/skins/_all-skins.min.css">
   <!-- Google Font -->
   <link rel="stylesheet"
@@ -405,111 +402,102 @@ use App\Helpers\urlHelper;
 <script src="<?= $app_config['base_url'] ?>assets/bower_components/Chart.js/Chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0"></script>
 <script>
-$(document).ready(function() {
-  $.ajax({
-    url: '<?= $app_config['base_url'] ?>process/saleProcess/get-sale-percentage-Handler.php',
-    method: 'GET',
-    dataType: 'json',
-    success: function(data) { 
-      if (data === null) {
-        $('#product-cart').html('<p>هنوز محصولی ثبت نشده است.</p>');
-        return;
-      }
-
-      const ctx = document.getElementById('pieChart').getContext('2d');
-      new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-          labels: data.labels,
-          datasets: [{
-            data: data.data,            
-            backgroundColor: data.colors
-          }]
-        },
-        options: {
-          responsive: true,
-          plugins: {
-            legend: {
-              position: 'none'
-            }
-          }
+  $(document).ready(function() {
+    $.ajax({
+      url: '<?= $app_config['base_url'] ?>process/saleProcess/get-sale-percentage-Handler.php',
+      method: 'GET',
+      dataType: 'json',
+      success: function(data) { 
+        if (data === null) {
+          $('#product-cart').html('<p>هنوز محصولی ثبت نشده است.</p>');
+          return;
         }
-      });
 
-      $('#product-legend').empty();
-      data.labels.forEach((label, index) => {
-        $('#product-legend').append(`
-          <li><i class="fa fa-circle-o" style="color: ${data.colors[index]}"></i> ${label}</li>
-        `);
-      });
-    },
-    error: function(xhr, status, error) {
-      console.log('خطا در دریافت داده‌ها:', error);
-    }
-  });
-
-  $.ajax({
-        url: '<?= $app_config['base_url'] ?>process/saleProcess/get-sale-total-price-Handler.php',
-        method: 'GET',
-        data : {
-          time: "<?= $_GET['analysisBy'] ?? '7-days-ago'?>"
-        },
-        dataType: 'json',
-        success: function(data) { 
-          console.log(data);
-          const ctx = document.getElementById('lineChart').getContext('2d');
-          if (ctx === null) {
-            console.log('خطا: کانواس به درستی بارگذاری نشده است.');
-            return;
-          }
-
-          new Chart(ctx, {
-            type: 'line',
-            data: {
-              labels: data.labels,
-              datasets: [{
-                label: 'درامد کل',
-                data: data.data,
-                borderColor: '#3c8dbc', 
-                fill: false,
-                tension: 0.1
-              }]
-            },
-            options: {
-              responsive: true,
-              plugins: {
-                legend: {
-                  position: 'top'
-                }
-              },
-              scales: {
-                y: {
-                  beginAtZero: true
-                }
+        const ctx = document.getElementById('pieChart').getContext('2d');
+        new Chart(ctx, {
+          type: 'doughnut',
+          data: {
+            labels: data.labels,
+            datasets: [{
+              data: data.data,            
+              backgroundColor: data.colors
+            }]
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: {
+                position: 'none'
               }
             }
-          });
-        },
-        error: function(xhr, status, error) {
-          console.log('خطا در دریافت داده‌ها:', error);
-        }
-      });
-});
+          }
+        });
+
+        $('#product-legend').empty();
+        data.labels.forEach((label, index) => {
+          $('#product-legend').append(`
+            <li><i class="fa fa-circle-o" style="color: ${data.colors[index]}"></i> ${label}</li>
+          `);
+        });
+      },
+      error: function(xhr, status, error) {
+        console.log('خطا در دریافت داده‌ها:', error);
+      }
+    });
+
+    $.ajax({
+          url: '<?= $app_config['base_url'] ?>process/saleProcess/get-sale-total-price-Handler.php',
+          method: 'GET',
+          data : {
+            time: "<?= $_GET['analysisBy'] ?? '7-days-ago'?>"
+          },
+          dataType: 'json',
+          success: function(data) { 
+            console.log(data);
+            const ctx = document.getElementById('lineChart').getContext('2d');
+            if (ctx === null) {
+              console.log('خطا: کانواس به درستی بارگذاری نشده است.');
+              return;
+            }
+
+            new Chart(ctx, {
+              type: 'line',
+              data: {
+                labels: data.labels,
+                datasets: [{
+                  label: 'درامد کل',
+                  data: data.data,
+                  borderColor: '#3c8dbc', 
+                  fill: false,
+                  tension: 0.1
+                }]
+              },
+              options: {
+                responsive: true,
+                plugins: {
+                  legend: {
+                    position: 'top'
+                  }
+                },
+                scales: {
+                  y: {
+                    beginAtZero: true
+                  }
+                }
+              }
+            });
+          },
+          error: function(xhr, status, error) {
+            console.log('خطا در دریافت داده‌ها:', error);
+          }
+        });
+  });
 </script>
 
 <!-- Bootstrap 3.3.7 -->
 <script src="<?= $app_config['base_url'] ?>assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- FastClick -->
-<script src="<?= $app_config['base_url'] ?>assets/bower_components/fastclick/lib/fastclick.js"></script>
 <!-- AdminLTE App -->
 <script src="<?= $app_config['base_url'] ?>assets/js/adminlte.min.js"></script>
-<!-- Sparkline -->
-<script src="<?= $app_config['base_url'] ?>assets/bower_components/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
-<!-- jvectormap  -->
-<script src="<?= $app_config['base_url'] ?>assets/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
-<script src="<?= $app_config['base_url'] ?>assets/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
-<!-- SlimScroll -->
-<script src="<?= $app_config['base_url'] ?>assets/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="<?= $app_config['base_url'] ?>assets/js/pages/dashboard2.js"></script>

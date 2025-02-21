@@ -428,8 +428,6 @@ $(document).ready(function () {
 </script>
 <!-- Bootstrap 3.3.7 -->
 <script src="<?= $app_config['base_url'] ?>assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- FastClick -->
-<script src="<?= $app_config['base_url'] ?>assets/bower_components/fastclick/lib/fastclick.js"></script>
 <!-- AdminLTE App -->
 <script src="<?= $app_config['base_url'] ?>assets/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->

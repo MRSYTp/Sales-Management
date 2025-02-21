@@ -18,22 +18,9 @@ use App\Helpers\urlHelper;
   <link rel="stylesheet" href="<?= $app_config['base_url'] ?>assets/bower_components/font-awesome/css/font-awesome.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="<?= $app_config['base_url'] ?>assets/bower_components/Ionicons/css/ionicons.min.css">
-  <!-- daterange picker -->
-  <link rel="stylesheet" href="<?= $app_config['base_url'] ?>assets/bower_components/bootstrap-daterangepicker/daterangepicker.css">
-  <!-- bootstrap datepicker -->
-  <link rel="stylesheet" href="<?= $app_config['base_url'] ?>assets/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
-  <!-- iCheck for checkboxes and radio inputs -->
-  <link rel="stylesheet" href="<?= $app_config['base_url'] ?>assets/plugins/iCheck/all.css">
-  <!-- Bootstrap Color Picker -->
-  <link rel="stylesheet" href="<?= $app_config['base_url'] ?>assets/bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css">
-  <!-- Bootstrap time Picker -->
-  <link rel="stylesheet" href="<?= $app_config['base_url'] ?>assets/plugins/timepicker/bootstrap-timepicker.min.css">
-  <!-- Select2 -->
-  <link rel="stylesheet" href="<?= $app_config['base_url'] ?>assets/bower_components/select2/dist/css/select2.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="<?= $app_config['base_url'] ?>assets/css/AdminLTE.css">
-  <!-- AdminLTE Skins. Choose a skin from the css/skins
-       folder instead of downloading all of them to reduce the load. -->
+
   <link rel="stylesheet" href="<?= $app_config['base_url'] ?>assets/css/skins/_all-skins.min.css">
 
 
@@ -374,27 +361,6 @@ use App\Helpers\urlHelper;
 </script>
 <!-- Bootstrap 3.3.7 -->
 <script src="<?= $app_config['base_url'] ?>assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- Select2 -->
-<script src="<?= $app_config['base_url'] ?>assets/bower_components/select2/dist/js/select2.full.min.js"></script>
-<!-- InputMask -->
-<script src="<?= $app_config['base_url'] ?>assets/plugins/input-mask/jquery.inputmask.js"></script>
-<script src="<?= $app_config['base_url'] ?>assets/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
-<script src="<?= $app_config['base_url'] ?>assets/plugins/input-mask/jquery.inputmask.extensions.js"></script>
-<!-- date-range-picker -->
-<script src="<?= $app_config['base_url'] ?>assets/bower_components/moment/min/moment.min.js"></script>
-<script src="<?= $app_config['base_url'] ?>assets/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
-<!-- bootstrap datepicker -->
-<script src="<?= $app_config['base_url'] ?>assets/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-<!-- bootstrap color picker -->
-<script src="<?= $app_config['base_url'] ?>assets/bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
-<!-- bootstrap time picker -->
-<script src="<?= $app_config['base_url'] ?>assets/plugins/timepicker/bootstrap-timepicker.min.js"></script>
-<!-- SlimScroll -->
-<script src="<?= $app_config['base_url'] ?>assets/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-<!-- iCheck 1.0.1 -->
-<script src="<?= $app_config['base_url'] ?>assets/plugins/iCheck/icheck.min.js"></script>
-<!-- FastClick -->
-<script src="<?= $app_config['base_url'] ?>assets/bower_components/fastclick/lib/fastclick.js"></script>
 <!-- AdminLTE App -->
 <script src="<?= $app_config['base_url'] ?>assets/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
