@@ -6,22 +6,30 @@ This project is a comprehensive sales management and financial analytics system 
 
 - Product Management: 
   - Add, edit, and delete products with ease.
+  
   - Search and sort products for quick access.
+  
   - Record product details such as name, description, price, and quantity.
 
 - Sales Registration:
   - Register new sales with complete details (customer name, date of sale, phone number, etc.).
+  
   - Automatically calculate the total amount for each sale based on the purchased items.
+  
   - Ability to register multiple products in a single sale and automatically calculate profit and revenue.
 
 - Sales and Financial Reports:
   - View detailed sales reports filtered by week, month, or year.
+  
   - Analyze profit and revenue using visually appealing charts and graphs.
+  
   - Identify best-selling products, most profitable sales, and top customers.
 
 - Graphs and Visual Analytics:
   - View top 5 best-selling products in a pie chart.
+  
   - Revenue and profit graphs for weekly, monthly, and yearly comparisons.
+  
   - Visual analysis of sales trends to make informed business decisions.
 
 - Advanced Search and Filters:
