@@ -37,7 +37,7 @@ Get your Sales Management System up and running with just a few steps:
 ### 1. Download the Project:
    - Clone or download the project directly from the GitHub repository:
     
-      ```dash
+      ```
      git clone https://github.com/MRSYTp/Sales-Management.git
      ```
      
